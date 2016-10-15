@@ -23,4 +23,11 @@ class PhotosController extends Controller
 		$ext = $o->ext;
 		return view('photos.photoview', ['name' => $name, 'ext' => $ext]);
     }
+    public function index()
+    {
+        $photos = Photo::all();
+        $count = count($photos) / 3;
+        $count = (int)$count;
+        return view('photos.index', ['photos' => $photos, 'count' => $count]);
+    }
 }

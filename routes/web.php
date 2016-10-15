@@ -23,6 +23,8 @@ Route::get('date', function(){
 
 Route::get('/home', 'HomeController@index');
 
+Route::get('/index', 'PhotosController@index')->name('index');
+
 Route::any('/admin/photos/upload', 'FormsController@uploadphoto')->name('uploadphoto');
 
 Route::any('/admin/tags/add', 'FormsController@addtag')->name('addtag');
