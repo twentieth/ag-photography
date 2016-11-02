@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('photos.head')
-<body>
-@include('photos.messages')
-<div class="container">
+<body class="w3-black">
 
-       <h2>Add Tag</h2>
+  <div class="w3-row">
+  <div class="w3-rest">
+    <div class="w3-container w3-padding-xxlarge w3-black w3-xlarge" style="position:absolute;top:0;bottom:0;right:0;left:0;" id="tag-form">
 
-       
+       <!--<h2>Add Tag</h2>-->
 
-       <form method="POST" action="/admin/tags/add" id="form-addtag">
-        {{ csrf_field() }}
-       	<div class="form-group">
-       			<label for="form-tag">title</label>
-       			<input type="text" name="tag" id="form-tag" class="form-control" value="{{ old('tag') }}">
-       	</div>
-       		
-       		<input type="submit" class="btn btn-primary" value="Submit">
-       		<input type="reset" class="btn btn-default" value="Reset">
-       </form>
-   </div>
+  {{ Form::open(['url' => '/admin/tags/add', 'method' => 'POST', 'id' => 'form-addtag']) }}
+  {{ Form::label('tag', 'tag', ['class' => 'w3-label w3-text-grey w3-hover-text-white']) }}
+  @if($errors->has('tag'))
+    @foreach($errors->get('tag') as $error)
+      <span class="w3-medium w3-text-red errors">{{ $error }} </span>
+    @endforeach
+  @endif
+  {{ Form::text('tag', null, ['class' => 'w3-input', 'placeholder' => '*required']) }}
+  {{ Form::submit('add', ['class' => 'w3-btn w3-text-grey w3-hover-text-white']) }}
+  {{ Form::reset('clean', ['class' => 'w3-btn w3-text-grey w3-hover-text-white']) }}
+  {{ Form::close() }}
+
+  </div>
+  </div>
+</div>
     </body>
 </html>
  

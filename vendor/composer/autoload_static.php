@@ -329,8 +329,14 @@ class ComposerStaticInit32c532256466bec1825c7d18e616c662
     );
 
     public static $classMap = array (
-        'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-        'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
+        'CreateP' => __DIR__ . '/../..' . '/database/migrations/2016_11_01_201911_create_p.php',
+        'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/old/2014_10_12_100000_create_password_resets_table.php',
+        'CreatePt' => __DIR__ . '/../..' . '/database/migrations/2016_11_01_201958_create_pt.php',
+        'CreateT' => __DIR__ . '/../..' . '/database/migrations/2016_11_01_201931_create_t.php',
+        'CreateTablePhotoTag' => __DIR__ . '/../..' . '/database/migrations/old/2016_10_22_093641_create_table_photo_tag.php',
+        'CreateTablePhotos' => __DIR__ . '/../..' . '/database/migrations/old/2016_10_22_093251_create_table_photos.php',
+        'CreateTableTags' => __DIR__ . '/../..' . '/database/migrations/old/2016_10_22_093613_create_table_tags.php',
+        'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/old/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
@@ -403,6 +409,7 @@ class ComposerStaticInit32c532256466bec1825c7d18e616c662
         'Hamcrest\\Type\\IsString' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Type/IsString.php',
         'Hamcrest\\Util' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
         'Hamcrest\\Xml\\HasXPath' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
+        'P' => __DIR__ . '/../..' . '/database/migrations/old/2016_10_22_103402_p.php',
         'PHPUnit\\Framework\\TestCase' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/TestCase.php',
         'PHPUnit_Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit_Extensions_GroupTestSuite' => __DIR__ . '/..' . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',

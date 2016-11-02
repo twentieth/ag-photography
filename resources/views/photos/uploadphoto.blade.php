@@ -1,41 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('photos.head')
-<body>
-@include('photos.messages')
-<div class="container">
+<body class="w3-black">
 
-  <h2>Upload Photo</h2>
+  <!--<h2>Upload Photo</h2>-->
 
 
+<div class="w3-row">
+  <div class="w3-rest">
+    <div class="w3-container w3-padding-xxlarge w3-black w3-xlarge" style="position:absolute;top:0;bottom:0;right:0;left:0;" id="uploadphoto-form">
 
-       <form method="POST" action="/admin/photos/upload" enctype="multipart/form-data" id="form-uploadphoto">
-        {{ csrf_field() }}
-       	<div class="form-group">
-       			<label for="form-phototitle">title</label>
-       			<input type="text" name="phototitle" id="form-phototitle" class="form-control" value="{{ old('phototitle') }}">
-       		</div>
-       		<div class="form-group">
-       			<label for="form-photodescription">description</label>
-       			<textarea name="photodescription" id="form-photodescription" class="form-control">{{ old('photodescription') }}</textarea>
-       		</div>
-          <div class="form-group">
-            <label for="form-tags">tags</label>
-            <select name="phototags[]" class="form-control" id="form-tags" multiple>
-              @foreach($tags as $tag)
-                <option value="{{ $tag->id }}">{{ $tag->tag }}</option>
-              @endforeach
-            </select>
-          </div>
-       		<div class="form-group">
-       			<label class="btn btn-info btn-file">
-    				Browse Photo<input name="photo" type="file" style="display: none;">
-				</label>
-			</div>
-       		<input type="submit" class="btn btn-primary">
-       		<input type="reset" class="btn btn-default">
-       </form>
-   </div>
+  {{ Form::open(['url' => '/admin/photos/upload', 'method' => 'POST', 'files' => true, 'id' => 'form-uploadphoto']) }}
+  {{ Form::label('phototitle', 'title', ['class' => 'w3-label w3-text-grey w3-hover-text-white']) }}
+  @if($errors->has('phototitle'))
+    @foreach($errors->get('phototitle') as $error)
+      <span class="w3-medium w3-text-red errors">{{ $error }} </span>
+    @endforeach
+  @endif
+  {{ Form::text('phototitle', null, ['class' => 'w3-input', 'placeholder' => '*required']) }}
+  {{ Form::label('photodescription', 'description', ['class' => 'w3-label w3-text-grey w3-hover-text-white']) }}
+  @if($errors->has('photodescription'))
+    @foreach($errors->get('photodescription') as $error)
+      <span class="w3-medium w3-text-red errors">{{ $error }} </span>
+    @endforeach
+  @endif
+  {{ Form::textarea('photodescription', null, ['class' => 'w3-input', 'rows' => '4']) }}
+  {{ Form::label('photo', 'add photo', ['class' => 'w3-label w3-text-grey w3-hover-text-white']) }}
+  @if($errors->has('photo'))
+    @foreach($errors->get('photo') as $error)
+      <span class="w3-medium w3-text-red errors">{{ $error }} </span>
+    @endforeach
+  @endif
+  <br>
+  {{ Form::file('photo') }}
+  <br>
+  {{ Form::label('phototags', 'tags', ['class' => 'w3-label w3-text-grey w3-hover-text-white']) }}
+  @if($errors->has('phototags'))
+    @foreach($errors->get('phototags') as $error)
+      <span class="w3-medium w3-text-red errors">{{ $error }} </span>
+    @endforeach
+  @endif
+  <br>
+  {{ Form::select('phototags', $tags_arr, null, ['multiple' => true]) }}
+  <br>
+  <br>
+  {{ Form::submit('add', ['class' => 'w3-btn w3-text-grey w3-hover-text-white']) }}
+  {{ Form::reset('clean', ['class' => 'w3-btn w3-text-grey w3-hover-text-white']) }}
+  {{ Form::close() }}
+    </div>
+  </div>
+</div>
+
     </body>
 </html>
  

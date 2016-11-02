@@ -2,27 +2,46 @@
 
 namespace App\Http\Controllers;
 
-  use Illuminate\Http\Request;
-  use App\Http\Requests;
-  use Illuminate\Support\Facades\DB;
-  use App\Http\Controllers\Controller;
-  use Image;
-  use App\Photo;
-  use App\Tag;
+use Illuminate\Http\Request;
 
-  class FormsController extends Controller
-  {
+use App\Http\Requests;
+use Image;
+use App\Photo;
+use App\Tag;
+
+class PhotosAdminController extends Controller
+{
     public function uploadphoto(Request $request)
     {
       if($request->isMethod('GET'))
       {
         $tags = Tag::all();
-        return view('photos.uploadphoto', ['tags' => $tags]);
+        $tags_arr = array();
+  		foreach($tags as $tag)
+  		{
+    		$tags_arr[$tag->id] = $tag->tag;
+  		}		
+        return view('photos.uploadphoto', ['tags' => $tags, 'tags_arr' => $tags_arr]);
       }
       if($request->isMethod('POST'))
       {
+      	$rules = [
+                'phototitle' => 'required|max:100',
+                'photodescription' => 'max:500',
+                'photo' => 'required|image|mimes:jpeg,jpg,png,JPG,JPEG',
+                'phototags' => 'max:100',
+            ];
+            $messages = [
+                'required' => 'The field is required.',
+                'max' => 'The field may not be greater than :max characters.',
+                'image' => 'The file must be an image file.',
+                'mimes' => 'The file must be an image file *.jpg, *.jpeg, *.JPG, *.JPEG, *.png.',
+            ];
+
+            $this->validate($request, $rules, $messages);
         if($request->hasFile('photo'))
         {
+
           if($request->file('photo')->isValid())
           {
             //////////// input text
@@ -37,7 +56,7 @@ namespace App\Http\Controllers;
             //////////// input photo
             $photo = $request->file('photo');
             $ext = $photo->extension();
-            if($ext === 'jpeg')
+            if($ext === 'jpeg' || $ext === 'JPG' || $ext === 'JPEG')
             {
               $ext = 'jpg';
             }
@@ -66,20 +85,20 @@ namespace App\Http\Controllers;
              $tags_ids[] = $tags_objects[$i]->id;
             }
 
-            Image::make($photo)->save('../storage/app/public/photos/normal/' . $name . '.' . $ext);
+            Image::make($photo)->save('photos/normal/' . $name . '.' . $ext);
             $photo_medium = Image::make($photo)->resize(NULL, 500, function($e){
               $e->aspectRatio();
-            })->save('../storage/app/public/photos/medium/' . $name . '.jpg');
+            })->save('photos/medium/' . $name . '.jpg');
 
             $photo_small_color = Image::make($photo)->resize(NULL, 140, function($e){
               $e->aspectRatio();
-            })->save('../storage/app/public/photos/small_color/' . $name . '.jpg');
+            })->save('photos/small_color/' . $name . '.jpg');
 
             $photo_small_bw = Image::make($photo)->resize(NULL, 140, function($e){
              $e->aspectRatio();
-            })->greyscale()->save('../storage/app/public/photos/small_bw/' . $name . '.jpg');
+            })->greyscale()->save('photos/small_bw/' . $name . '.jpg');
         
-            ///////////// store in DB
+            ///////////// store in db
             $o = new Photo();
             $o->title = $title;
             $o->description = $description;
@@ -97,12 +116,12 @@ namespace App\Http\Controllers;
           }
           else
           {
-            return redirect()->route('uploadphoto')->withInput()->with(['message_type' => 'warning', 'message_text' => 'Załączony plik jest nieprawidłowy.']);
+            return redirect()->route('uploadphoto')->with(['message_type' => 'warning', 'message_text' => 'Załączony plik jest nieprawidłowy.']);
           }
         }
         else
         {
-          return redirect()->route('uploadphoto')->withInput()->with(['message_type' => 'warning', 'message_text' => 'Załącz plik.']);
+          return redirect()->route('uploadphoto')->with(['message_type' => 'warning', 'message_text' => 'Załącz plik.']);
         }
       }
     }
@@ -114,8 +133,19 @@ namespace App\Http\Controllers;
       }
       if($request->isMethod('POST'))
       {
+      	$rules = [
+                'tag' => 'required|max:100',
+            ];
+            $messages = [
+                'required' => 'The field is required.',
+                'max' => 'The field may not be greater than :max characters.',
+            ];
+
+            $this->validate($request, $rules, $messages);
+
         $tag_input = trim(strtolower($request->input('tag')));
         $ifExists = Tag::where('tag', $tag_input)->exists();
+
         if($ifExists)
         {
          return redirect()->route('addtag')->withInput()->with(['message_type' => 'warning', 'message_text' => 'Podana nazwa już istnieje w bazie danych. Wprowadź inną.']);
@@ -130,7 +160,4 @@ namespace App\Http\Controllers;
         }
       }
     }
-  }
-
-
-?>
+}

@@ -6,8 +6,14 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-    'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
+    'CreateP' => $baseDir . '/database/migrations/2016_11_01_201911_create_p.php',
+    'CreatePasswordResetsTable' => $baseDir . '/database/migrations/old/2014_10_12_100000_create_password_resets_table.php',
+    'CreatePt' => $baseDir . '/database/migrations/2016_11_01_201958_create_pt.php',
+    'CreateT' => $baseDir . '/database/migrations/2016_11_01_201931_create_t.php',
+    'CreateTablePhotoTag' => $baseDir . '/database/migrations/old/2016_10_22_093641_create_table_photo_tag.php',
+    'CreateTablePhotos' => $baseDir . '/database/migrations/old/2016_10_22_093251_create_table_photos.php',
+    'CreateTableTags' => $baseDir . '/database/migrations/old/2016_10_22_093613_create_table_tags.php',
+    'CreateUsersTable' => $baseDir . '/database/migrations/old/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
@@ -80,6 +86,7 @@ return array(
     'Hamcrest\\Type\\IsString' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Type/IsString.php',
     'Hamcrest\\Util' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
     'Hamcrest\\Xml\\HasXPath' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
+    'P' => $baseDir . '/database/migrations/old/2016_10_22_103402_p.php',
     'PHPUnit\\Framework\\TestCase' => $vendorDir . '/phpunit/phpunit/src/ForwardCompatibility/TestCase.php',
     'PHPUnit_Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
     'PHPUnit_Extensions_GroupTestSuite' => $vendorDir . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',

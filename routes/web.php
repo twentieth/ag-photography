@@ -23,11 +23,13 @@ Route::get('date', function(){
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('/index', 'PhotosController@index')->name('index');
+Route::get('/photos/index', 'PhotosController@index')->name('index');
 
-Route::any('/admin/photos/upload', 'FormsController@uploadphoto')->name('uploadphoto');
+Route::any('/photos/contact', 'PhotosController@contact')->name('contact');
 
-Route::any('/admin/tags/add', 'FormsController@addtag')->name('addtag');
+Route::any('/admin/photos/upload', 'PhotosAdminController@uploadphoto')->name('uploadphoto');
+
+Route::any('/admin/tags/add', 'PhotosAdminController@addtag')->name('addtag');
 
 Route::get('/admin/photos/list', 'PhotosController@photoslist')->name('photoslist');
 
