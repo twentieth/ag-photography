@@ -17,7 +17,7 @@
       <span class="w3-medium w3-text-red errors">{{ $error }} </span>
     @endforeach
   @endif
-  {{ Form::text('phototitle', null, ['class' => 'w3-input', 'placeholder' => '*required']) }}
+  {{ Form::text('phototitle', null, ['class' => 'w3-input']) }}
   {{ Form::label('photodescription', 'description', ['class' => 'w3-label w3-text-grey w3-hover-text-white']) }}
   @if($errors->has('photodescription'))
     @foreach($errors->get('photodescription') as $error)
@@ -41,7 +41,7 @@
     @endforeach
   @endif
   <br>
-  {{ Form::select('phototags', $tags_arr, null, ['multiple' => true]) }}
+  {{ Form::select('phototags[]', $tags_arr, null, ['multiple' => true]) }}
   <br>
   <br>
   {{ Form::submit('add', ['class' => 'w3-btn w3-text-grey w3-hover-text-white']) }}

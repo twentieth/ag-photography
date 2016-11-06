@@ -13,11 +13,13 @@ class ComposerStaticInit32c532256466bec1825c7d18e616c662
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
-        'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
+        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -80,6 +82,8 @@ class ComposerStaticInit32c532256466bec1825c7d18e616c662
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
+            'GuzzleHttp\\Promise\\' => 19,
+            'GuzzleHttp\\' => 11,
         ),
         'F' => 
         array (
@@ -228,6 +232,14 @@ class ComposerStaticInit32c532256466bec1825c7d18e616c662
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
         ),
+        'GuzzleHttp\\Promise\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
+        ),
+        'GuzzleHttp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
         'Faker\\' => 
         array (
             0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
@@ -329,10 +341,8 @@ class ComposerStaticInit32c532256466bec1825c7d18e616c662
     );
 
     public static $classMap = array (
-        'CreateP' => __DIR__ . '/../..' . '/database/migrations/2016_11_01_201911_create_p.php',
+        'Ch' => __DIR__ . '/../..' . '/database/migrations/2016_11_06_214405_ch.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/old/2014_10_12_100000_create_password_resets_table.php',
-        'CreatePt' => __DIR__ . '/../..' . '/database/migrations/2016_11_01_201958_create_pt.php',
-        'CreateT' => __DIR__ . '/../..' . '/database/migrations/2016_11_01_201931_create_t.php',
         'CreateTablePhotoTag' => __DIR__ . '/../..' . '/database/migrations/old/2016_10_22_093641_create_table_photo_tag.php',
         'CreateTablePhotos' => __DIR__ . '/../..' . '/database/migrations/old/2016_10_22_093251_create_table_photos.php',
         'CreateTableTags' => __DIR__ . '/../..' . '/database/migrations/old/2016_10_22_093613_create_table_tags.php',

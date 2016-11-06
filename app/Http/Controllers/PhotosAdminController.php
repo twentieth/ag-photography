@@ -26,14 +26,14 @@ class PhotosAdminController extends Controller
       if($request->isMethod('POST'))
       {
       	$rules = [
-                'phototitle' => 'required|max:100',
+                'phototitle' => 'max:100',
                 'photodescription' => 'max:500',
-                'photo' => 'required|image|mimes:jpeg,jpg,png,JPG,JPEG',
+                'photo' => 'required|image|mimes:jpeg,jpg,png,JPG,JPEG|max:102400',
                 'phototags' => 'max:100',
             ];
             $messages = [
                 'required' => 'The field is required.',
-                'max' => 'The field may not be greater than :max characters.',
+                'max' => 'The field may not be greater than :max.',
                 'image' => 'The file must be an image file.',
                 'mimes' => 'The file must be an image file *.jpg, *.jpeg, *.JPG, *.JPEG, *.png.',
             ];
@@ -60,13 +60,22 @@ class PhotosAdminController extends Controller
             {
               $ext = 'jpg';
             }
-            $name = rand();
+            function randomStringFromFigures($x)
+                {
+                  $str = '';
+                  for($i=0;$i<$x;$i++)
+                  {
+                    $str .= (string)rand(0, 9);
+                  }
+                  return $str;
+                }
+            $name = randomStringFromFigures(10);
             while(True)
             {
               $ifExists = Photo::where('name', $name)->exists();
               if($ifExists)
               {
-                $name = rand();
+                $name = randomStringFromFigures(10);
                 continue;
               }
               else
@@ -85,18 +94,18 @@ class PhotosAdminController extends Controller
              $tags_ids[] = $tags_objects[$i]->id;
             }
 
-            Image::make($photo)->save('photos/normal/' . $name . '.' . $ext);
-            $photo_medium = Image::make($photo)->resize(NULL, 500, function($e){
+            Image::make($photo)->save('photos/normal/' . $name . '.' . 'jpg');
+            $photo_medium = Image::make($photo)->resize(NULL, 700, function($e){
               $e->aspectRatio();
             })->save('photos/medium/' . $name . '.jpg');
 
-            $photo_small_color = Image::make($photo)->resize(NULL, 140, function($e){
+            $photo_small_color = Image::make($photo)->resize(500, NULL, function($e){
               $e->aspectRatio();
             })->save('photos/small_color/' . $name . '.jpg');
 
-            $photo_small_bw = Image::make($photo)->resize(NULL, 140, function($e){
-             $e->aspectRatio();
-            })->greyscale()->save('photos/small_bw/' . $name . '.jpg');
+            //$photo_small_bw = Image::make($photo)->resize(NULL, 500, function($e){
+             //$e->aspectRatio();
+            //})->greyscale()->save('photos/small_bw/' . $name . '.jpg');
         
             ///////////// store in db
             $o = new Photo();

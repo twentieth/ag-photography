@@ -23,7 +23,7 @@ Route::get('date', function(){
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('/photos/index', 'PhotosController@index')->name('index');
+Route::any('/photos/index', 'PhotosController@index')->name('index');
 
 Route::any('/photos/contact', 'PhotosController@contact')->name('contact');
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Photo;
 use App\Tag;
+use Illuminate\Support\Facades\Mail;
 
 class PhotosController extends Controller
 {
@@ -23,11 +24,48 @@ class PhotosController extends Controller
 		$ext = $o->ext;
 		return view('photos.photoview', ['name' => $name, 'ext' => $ext]);
     }
-    public function index()
+    public function index(Request $request)
     {
-        $photos = Photo::all();
-        $count = count($photos) / 3;
-        $count = (int)$count;
+        if($request->isMethod('POST'))
+        {
+            if($request->has('name'))
+            {
+                $name = $request->name;
+                $all = Photo::all();
+                $id = Photo::where('name', $name)->first()->id;
+
+                if($request->direction === 'right')
+                {
+                    if(Photo::where('id', '>', $id)->exists())
+                    {
+                        $collection = Photo::where('id', '>', $id)->first();
+                    }
+                    else
+                    {
+                        $collection = $all->first();
+                    }
+                }
+                if($request->direction === 'left')
+                {
+                    if(Photo::where('id', '<', $id)->exists())
+                    {
+                        $collection = Photo::where('id', '<', $id)->orderBy('id', 'desc')->first();
+                    }
+                    else
+                    {
+                        $collection = $all->last();
+                    }
+                }
+                return response()->json(['title' => $collection->title, 'name' => $collection->name, 'description' => $collection->description]);
+            }
+        }
+        else
+        {
+            $photos = Photo::all();
+            $count = count($photos) / 3;
+            $count = (int)$count;
+        }
+        
         return view('photos.index', ['photos' => $photos, 'count' => $count]);
     }
     public function contact(Request $request)
@@ -50,8 +88,27 @@ class PhotosController extends Controller
             ];
 
             $this->validate($request, $rules, $messages);
-            
 
+            $name = trim($request->your_name);
+            $from = trim($request->your_email);
+            $message = trim($request->your_message);
+            $use = ['from' => $from, 'name' => $name];
+
+            if($request->cc_myself)
+            {
+                Mail::send('photos.contact', ['content' => $message], function($message) use ($from, $name){
+                    $message->from('twentiethsite@linux.pl', '[[PHOTOS]]')->to('twentiethsite@linux.pl')->replyTo($from)->subject($name . 'from [[PHOTOS]]');
+                });
+            }
+            else
+            {
+                Mail::send('photos.contact', ['content' => $message], function($message) use ($from, $name){
+                    $message->from('twentiethsite@linux.pl', '[[PHOTOS]]')->to('twentiethsite@linux.pl')->subject($name . 'from [[PHOTOS]]');
+                });
+            }
+            
+            
+            
             return redirect()->route('contact');
         }
     }
