@@ -11,6 +11,7 @@ use App\Tag;
 
 class PhotosAdminController extends Controller
 {
+    /*******************************************/
     public function uploadphoto(Request $request)
     {
       if($request->isMethod('GET'))
@@ -134,11 +135,14 @@ class PhotosAdminController extends Controller
         }
       }
     }
+
+    /**************************************/
     public function addtag(Request $request)
     {
       if($request->isMethod('GET'))
       {
-        return view('photos.addtag');
+        $tags = Tag::all();
+        return view('photos.addtag', ['tags' => $tags]);
       }
       if($request->isMethod('POST'))
       {
@@ -157,7 +161,7 @@ class PhotosAdminController extends Controller
 
         if($ifExists)
         {
-         return redirect()->route('addtag')->withInput()->with(['message_type' => 'warning', 'message_text' => 'Podana nazwa już istnieje w bazie danych. Wprowadź inną.']);
+         return redirect()->route('addtag')->withInput()->with(['message_type' => 'warning', 'message_text' => 'Podany tag już istnieje w bazie danych. Wprowadź inny.']);
         }
         else
         {

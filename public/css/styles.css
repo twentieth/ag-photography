@@ -4,4 +4,55 @@
     color: white;
     z-index: 100;
 }
-
+.success, .info
+{
+	border: 1px solid white;
+	margin-bottom: 30px;
+}
+.warning
+{
+	border: 1px solid #f44336;
+	margin-bottom: 30px;
+}
+.error
+{
+	border: 1px solid #f44336;
+	margin-bottom: 30px;
+}
+.fa-remove
+{
+	padding-top: 4px;
+}
+.success .fa-remove, .info .fa-remove
+{
+	color: white;
+}
+.warning .fa-remove
+{
+	color: #f44336;
+}
+.error .fa-remove
+{
+	color: #f44336;
+}
+.fa-remove:hover
+{
+	cursor: pointer;
+	color: white;
+}
+.success .fa-remove:hover, .info .fa-remove:hover
+{
+	color: #d4d4d4;
+}
+h2
+{
+	font-weight: bold;
+}
+.fa-toggle-on
+{
+	display: none;
+}
+.button-toggle
+{
+	cursor: pointer;
+}

@@ -30,8 +30,6 @@
             {
                 margin-bottom: 12px;
             }
-            
-
         </style>
 
         <!-- Scripts -->

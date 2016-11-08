@@ -1,17 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('photos.head')
-<body>
+<body class="w3-white">
+  
 <!-- Sidenav -->
 <nav class="w3-sidenav w3-black w3-card-2 w3-animate-top w3-center w3-xxlarge my-sidenav" style="display:none;padding-top:150px">
   <a href="#" class="w3-closenav w3-jumbo w3-right w3-display-topright close-my-sidenav" style="padding:6px 24px">
     <i class="fa fa-remove"></i>
   </a>
   <a href="/photos/index" class="w3-text-grey w3-hover-black">Home</a>
-  <a href="javascript:void(0)" class="w3-text-grey w3-hover-black">About</a>
-  <a href="javascript:void(0)" class="w3-text-grey w3-hover-black">Cathegories</a>
-  <a href="/admin/photos/upload" target="_blank" class="w3-text-grey w3-hover-black">Add</a>
+  @if(isset($tags))
+  <div class="w3-dropdown-click">
+    <a href="javascript:void(0)" class="w3-text-grey w3-hover-light-grey dropdown-content-click-cathegories">Cathegories</a>
+    <div class="w3-dropdown-content dropdown-content-cathegories">
+      @foreach($tags as $tag)
+        <a class="w3-black w3-text-grey w3-hover-black w3-xlarge" href="/photos/index/{{{ $tag->tag }}}">{{ $tag->tag }}</a>
+      @endforeach
+    </div>
+  </div>
+  @endif
+  <a href="/admin/photos/upload" target="_blank" class="w3-text-grey w3-hover-black">Add a new photo</a>
+  <a href="/admin/tags/add" target="_blank" class="w3-text-grey w3-hover-black">Add a new tag</a>
   <a href="/photos/contact" class="w3-text-grey w3-hover-black">Contact</a>
+  <a href="javascript:void(0)" class="w3-text-grey w3-hover-light-grey">About</a>
 </nav>
 
 <!-- Lightbox -->
@@ -36,7 +47,7 @@
             
         </div>
         <div class="w3-row">
-          <div class="w3-margin description-container">
+          <div class="w3-container w3-medium w3-margin description-container">
             <span class="description-lightbox"></span>
           </div>
         </div>
@@ -55,12 +66,12 @@
  
 
 <!-- Header -->
-<header class="w3-container w3-padding-32 w3-center w3-opacity w3-margin-bottom">
+<header class="w3-container w3-padding-32 w3-center w3-margin-bottom">
   <span class="w3-opennav w3-xxlarge w3-right w3-margin-right open-my-sidenav"><i class="fa fa-bars"></i></span>
   <div class="w3-clear"></div>
-  <h1>Adam Guła Photography</h1>
-  <p>Image gallery</p>
-  <p class="w3-padding-16"><button class="w3-btn" onclick="myFunction()">Toggle grid</button></p>
+  <h1 class="w3-xxxlarge">Adam Guła Photography</h1>
+  <p class="w3-xlarge">Image gallery</p>
+  <p class="w3-padding-16"><i onclick="myFunction()" class="fa fa-toggle-off w3-xxlarge button-toggle"></i><i onclick="myFunction()" class="fa fa-toggle-on w3-xxlarge button-toggle"></i></p>
 </header>
 
 <!-- Photo Grid -->

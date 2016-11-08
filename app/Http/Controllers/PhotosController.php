@@ -24,8 +24,26 @@ class PhotosController extends Controller
 		$ext = $o->ext;
 		return view('photos.photoview', ['name' => $name, 'ext' => $ext]);
     }
-    public function index(Request $request)
+
+    /************************************************/
+    public function index(Request $request, $tag=null)
     {
+        if($request->isMethod('GET'))
+        {
+            if($tag === null || !isset($tag))
+            {
+                $photos = Photo::all();
+                $count = count($photos) / 3;
+                $count = (int)$count;
+            }
+            else
+            {
+                $tag = Tag::where('tag', $tag)->first();
+                $photos = $tag->photos;
+                $count = count($photos) / 3;
+                $count = (int)$count;
+            }
+        }
         if($request->isMethod('POST'))
         {
             if($request->has('name'))
@@ -59,20 +77,17 @@ class PhotosController extends Controller
                 return response()->json(['title' => $collection->title, 'name' => $collection->name, 'description' => $collection->description]);
             }
         }
-        else
-        {
-            $photos = Photo::all();
-            $count = count($photos) / 3;
-            $count = (int)$count;
-        }
-        
-        return view('photos.index', ['photos' => $photos, 'count' => $count]);
+        $tags = Tag::all();
+        return view('photos.index', ['photos' => $photos, 'count' => $count, 'tags' => $tags]);
     }
+
+    /***************************************/
     public function contact(Request $request)
     {
         if($request->isMethod('GET'))
         {
-            return view('photos.contact');
+            $tags = Tag::all();
+            return view('photos.contact', ['tags' => $tags]);
         }
         if($request->isMethod('POST'))
         {

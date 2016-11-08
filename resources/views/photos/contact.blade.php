@@ -3,11 +3,18 @@
 @include('photos.head')
 <body class="w3-black">
 
-
+  
 
 <div class="w3-row">
   <div class="w3-rest">
-    <div class="w3-container w3-padding-xxlarge w3-black w3-xlarge" style="position:absolute;top:0;bottom:0;right:0;left:0;" id="contact-form">
+    <div class="w3-container w3-padding-xxlarge w3-xlarge" id="contact-form">
+
+@include('photos.sidenav')
+@include('photos.messages')
+
+<div class="w3-row">
+  <h2 class="w3-xxlarge">Send a message</h2>
+</div>
 
   {{ Form::open(['url' => '/photos/contact', 'method' => 'POST', 'name' => 'contact']) }}
   {{ Form::label('your_name', 'your name', ['class' => 'w3-label w3-text-grey w3-hover-text-white']) }}

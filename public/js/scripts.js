@@ -127,12 +127,16 @@ $('form[name="contact"]').on('submit', function(e)
 $('button[type="reset"], input[type="reset"]').click(function(){
     $('input[type="text"], input[type="email"], input[type="password"], textarea').val('')
     $('.errors').hide()
+    $('.message').hide()
 });
 $('input[type="text"], input[type="email"], input[type="password"], textarea').focus(function(){
     if($(this).prev().hasClass('errors'))
     {
         $(this).prev().hide()
     }
+})
+$('.close-message').click(function(){
+    $('.message').hide()
 })
 
 $('#form-addtag').submit(function(){
@@ -174,6 +178,66 @@ $('#form-addtag').submit(function(){
 });
 
 */
+
+
+    $('.fa-toggle-off, .fa-toggle-on').click(function(){
+        if($(this).hasClass('fa-toggle-off'))
+        {
+            $('.fa-toggle-off').hide()
+            $('.fa-toggle-on').show()
+        }
+        if($(this).hasClass('fa-toggle-on'))
+        {
+            $('.fa-toggle-on').hide()
+            $('.fa-toggle-off').show()
+        }
+    })
+
+
+    $('.dropdown-content-click-cathegories').click(function(){
+        $('.dropdown-content-cathegories').slideToggle()
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 });

@@ -1,17 +1,8 @@
 
-<div style="position:relative;color:white;z-index:100;" class="">
-	@if (count($errors) > 0)
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-@endif
-</div>
-
-
-    
-
-<div style="position:relative;z-index:99;color:white;" class="alert alert-{{ session('message_type') }} alert-js" style="">
-
-</div>
+	@if(session('message_type'))
+	<div class="w3-row">
+        <div class="w3-container w3-black w3-padding-large {{ session('message_type') }} message">
+        	<div class="message_text">{{ session('message_text') }} <i class="fa fa-remove w3-right close-message"></i></div>
+        </div>
+    </div>
+	@endif
