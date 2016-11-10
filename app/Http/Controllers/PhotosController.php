@@ -30,55 +30,90 @@ class PhotosController extends Controller
     {
         if($request->isMethod('GET'))
         {
-            if($tag === null || !isset($tag))
+            if($tag === null)
             {
+                $tag_to_ajax = $tag;
                 $photos = Photo::all();
                 $count = count($photos) / 3;
                 $count = (int)$count;
             }
             else
             {
+                $tag_to_ajax = $tag;
                 $tag = Tag::where('tag', $tag)->first();
                 $photos = $tag->photos;
                 $count = count($photos) / 3;
                 $count = (int)$count;
             }
         }
-        if($request->isMethod('POST'))
+        if($request->ajax())
         {
             if($request->has('name'))
             {
                 $name = $request->name;
                 $all = Photo::all();
                 $id = Photo::where('name', $name)->first()->id;
+                $tag = Tag::where('tag', $tag)->first();
 
                 if($request->direction === 'right')
                 {
-                    if(Photo::where('id', '>', $id)->exists())
+                    if($tag == null)
                     {
-                        $collection = Photo::where('id', '>', $id)->first();
+                        if(Photo::where('id', '>', $id)->exists())
+                        {
+                            $collection = Photo::where('id', '>', $id)->first();
+                        }
+                        else
+                        {
+                            $collection = $all->first();
+                        }
                     }
                     else
                     {
-                        $collection = $all->first();
+                        if($tag->photos()->where('id', '>', $id)->exists())
+                        {
+                            $collection = $tag->photos()->where('id', '>', $id)->first();
+                        }
+                        else
+                        {
+                            $collection = $tag->photos->first();
+                        }
                     }
                 }
                 if($request->direction === 'left')
                 {
-                    if(Photo::where('id', '<', $id)->exists())
+                    if($tag == null)
                     {
-                        $collection = Photo::where('id', '<', $id)->orderBy('id', 'desc')->first();
+                        if(Photo::where('id', '<', $id)->exists())
+                        {
+                            $collection = Photo::where('id', '<', $id)->orderBy('id', 'desc')->first();
+                        }
+                        else
+                        {
+                            $collection = $all->last();
+                        }
                     }
                     else
                     {
-                        $collection = $all->last();
+                        if($tag->photos()->where('id', '<', $id)->exists())
+                        {
+                            $collection = $tag->photos()->where('id', '<', $id)->orderBy('id', 'desc')->first();
+                        }
+                        else
+                        {
+                            $collection = $tag->photos->last();
+                        }
                     }
                 }
-                return response()->json(['title' => $collection->title, 'name' => $collection->name, 'description' => $collection->description]);
+                $tags = '';
+                foreach ($collection->tags as $tag) {
+                    $tags .= $tag->tag . ' ';
+                }
+                return response()->json(['title' => $collection->title, 'name' => $collection->name, 'description' => $collection->description, 'tags' => $tags]);
             }
         }
         $tags = Tag::all();
-        return view('photos.index', ['photos' => $photos, 'count' => $count, 'tags' => $tags]);
+        return view('photos.index', ['photos' => $photos, 'count' => $count, 'tags' => $tags, 'tag_to_ajax' => $tag_to_ajax]);
     }
 
     /***************************************/

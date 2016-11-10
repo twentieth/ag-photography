@@ -100,6 +100,11 @@
   <img style="width:100%;" class="w3-image w3-greyscale w3-hover-normal image-small" src="/photos/small_color/{{ $photo->name }}.jpg" alt="{{ $photo->title }}">
   <span class="title-hidden" style="display:none;">{{ $photo->title }}</span>
   <span class="description-hidden" style="display:none;">{{ $photo->description }}</span>
+  <span class="tags-hidden" style="display:none;">
+    @foreach($photo->tags as $tag)
+      {{ $tag->tag }} 
+    @endforeach
+  </span>
   
   <?php $x++; ?>
 @endforeach
@@ -137,6 +142,8 @@ function w3_open() {
 
 
 </script>
+
+<span class="tag-hidden" style="display:none;">{{ $tag_to_ajax }}</span>
 </body>
 </html>
  

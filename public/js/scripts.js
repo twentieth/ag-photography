@@ -17,6 +17,7 @@ $('.image-small').hover(function(){
 }, function(){
 	$(this).addClass('w3-greyscale')
 })
+$('.image-lightbox').css({'maxHeight': window.screen.height*0.9, 'maxWidth': window.screen.width*0.85})
 
 /*
  CSS END
@@ -34,10 +35,12 @@ $('.image-small').on('click', function(){
 	var src = $(this).attr('src')
 	var title = $(this).next().text()
 	var description = $(this).next().next().text()
+    var tags = $(this).next().next().next().text()
     var name = src.substr(20,10)
     $('.image-lightbox').attr('src', '/photos/medium/' + name + '.jpg')
     $('.title-lightbox').text(title)
     $('.description-lightbox').text(description)
+    $('.tags-lightbox').text(tags)
     $('.image-lightbox, .title-lightbox, .description-lightbox, .tags-lightbox').show(function(){
        	$('.lightbox').css({'width': "100%"}).show()
     })
@@ -61,32 +64,44 @@ $('.button-right, .button-left').on('click', function(e){
     });
     var src = $('.image-lightbox').attr('src')
     var name = src.substr(15,10)
+    var tag_name = $('.tag-hidden').text()
+    if(tag_name != '')
+    {
+        var url = '/photos/index/' + tag_name
+    }
+    else
+    {
+        var url = '/photos/index'
+    }
 
     if(e.target.className.search('fa-chevron-right') !== -1)
     {
         var data = {
             direction: 'right',
-            name: name
+            name: name,
+            tag_name: tag_name
         }
     }
     if(e.target.className.search('fa-chevron-left') !== -1)
     {
         var data = {
             direction: 'left',
-            name: name
+            name: name,
+            tag_name: tag_name
         }
     }
 
     $('.lightbox').fadeOut(function(){
     	$('.image-lightbox, .title-lightbox, .description-lightbox, .tags-lightbox').hide()
     	$.ajax({
-        	url: '/photos/index',
+        	url: url,
         	type: 'POST',
         	data: data
     	}).done(function(data){
         	$('.image-lightbox').attr('src', '/photos/medium/' + data.name + '.jpg')
         	$('.title-lightbox').text(data.title)
         	$('.description-lightbox').text(data.description)
+            $('.tags-lightbox').text(data.tags)
         	$('.image-lightbox, .title-lightbox, .description-lightbox, .tags-lightbox').show(function(){
         		$('.lightbox').show()
         	})

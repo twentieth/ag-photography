@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::any('test', 'TestController@test');
 
 Auth::routes();
 
@@ -23,7 +24,7 @@ Route::get('date', function(){
 
 Route::get('/home', 'HomeController@index');
 
-Route::any('/photos/index/{tag?}', 'PhotosController@index')->name('index');
+Route::any('photos/index/{tag?}', 'PhotosController@index')->name('index');
 
 Route::any('/photos/contact', 'PhotosController@contact')->name('contact');
 
