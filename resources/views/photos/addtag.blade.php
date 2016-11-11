@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('photos.head')
-<body class="w3-black">
+<body class="w3-light-grey">
 
   <div class="w3-row">
   <div class="w3-rest">
@@ -15,15 +15,15 @@
 </div>
 
   {{ Form::open(['url' => '/admin/tags/add', 'method' => 'POST', 'id' => 'form-addtag']) }}
-  {{ Form::label('tag', 'tag', ['class' => 'w3-label w3-text-grey w3-hover-text-white']) }}
+  {{ Form::label('tag', 'tag', ['class' => 'w3-label w3-text-black w3-hover-text-white']) }}
   @if($errors->has('tag'))
     @foreach($errors->get('tag') as $error)
       <span class="w3-medium w3-text-red errors">{{ $error }} </span>
     @endforeach
   @endif
   {{ Form::text('tag', null, ['class' => 'w3-input', 'placeholder' => '*required']) }}
-  {{ Form::submit('add', ['class' => 'w3-btn w3-text-grey w3-hover-text-white']) }}
-  {{ Form::reset('clean', ['class' => 'w3-btn w3-text-grey w3-hover-text-white']) }}
+  {{ Form::submit('add', ['class' => 'w3-btn w3-light-grey w3-text-black']) }}
+  {{ Form::reset('clean', ['class' => 'w3-btn w3-light-grey w3-text-black']) }}
   {{ Form::close() }}
 
   </div>

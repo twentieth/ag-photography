@@ -13,11 +13,11 @@ $('.button').hover(function(){
 $('.title-container, .button').css({'color': '#f1f1f1'})
 
 $('.image-small').hover(function(){
-	$(this).removeClass('w3-greyscale')
+	$(this).removeClass('w3-greyscale-max')
 }, function(){
-	$(this).addClass('w3-greyscale')
+	$(this).addClass('w3-greyscale-max')
 })
-$('.image-lightbox').css({'maxHeight': window.screen.height*0.9, 'maxWidth': window.screen.width*0.85})
+$('.image-lightbox').css({'maxHeight': window.screen.height*0.8, 'maxWidth': window.screen.width*0.85})
 
 /*
  CSS END
@@ -37,10 +37,28 @@ $('.image-small').on('click', function(){
 	var description = $(this).next().next().text()
     var tags = $(this).next().next().next().text()
     var name = src.substr(20,10)
-    $('.image-lightbox').attr('src', '/photos/medium/' + name + '.jpg')
+    $('.image-lightbox').attr('src', '/photos/normal/' + name + '.jpg')
     $('.title-lightbox').text(title)
     $('.description-lightbox').text(description)
-    $('.tags-lightbox').text(tags)
+    var tags = tags.split(' ')
+    tags.pop()
+            if(tags != '')
+            {
+                var tags_urls = 'Cathegories: '
+                for(var i=0;i<tags.length;i++)
+                {
+                    var tag = tags[i].toString().trim()
+                    if(tag)
+                    {
+                        tags_urls += '<a class="w3-padding w3-margin w3-tag w3-round w3-center tag-lightbox" href="/photos/index/' + tag + '" style="display:inline-block;">' + tag + ' </a>'
+                    }
+                }
+                $('.tags-lightbox').html(tags_urls)
+            }
+            else
+            {
+                $('.tags-lightbox').html('No cathegories.')
+            }
     $('.image-lightbox, .title-lightbox, .description-lightbox, .tags-lightbox').show(function(){
        	$('.lightbox').css({'width': "100%"}).show()
     })
@@ -98,10 +116,28 @@ $('.button-right, .button-left').on('click', function(e){
         	type: 'POST',
         	data: data
     	}).done(function(data){
-        	$('.image-lightbox').attr('src', '/photos/medium/' + data.name + '.jpg')
+        	$('.image-lightbox').attr('src', '/photos/normal/' + data.name + '.jpg')
         	$('.title-lightbox').text(data.title)
         	$('.description-lightbox').text(data.description)
-            $('.tags-lightbox').text(data.tags)
+            var tags = data.tags.split(' ')
+            tags.pop()
+            if(tags != '')
+            {
+                var tags_urls = 'Cathegories: '
+                for(var i=0;i<tags.length;i++)
+                {
+                    var tag = tags[i].toString().trim()
+                    if(tag)
+                    {
+                        tags_urls += '<a class="w3-padding w3-margin w3-tag w3-round w3-center tag-lightbox" href="/photos/index/' + tag + '" style="display:inline-block;">' + tag + ' </a>'
+                    }
+                }
+                $('.tags-lightbox').html(tags_urls)
+            }
+            else
+            {
+                $('.tags-lightbox').html('No cathegories.')
+            }
         	$('.image-lightbox, .title-lightbox, .description-lightbox, .tags-lightbox').show(function(){
         		$('.lightbox').show()
         	})
@@ -126,15 +162,15 @@ $('form[name="contact"]').on('submit', function(e)
 
         if(!regex_name.test($('input[name="your_name"]').val()))
         {
-            $('input[name="your_name"]').before('<span class="w3-medium w3-text-red errors">The field is filled improperly.</span>')
+            $('input[name="your_name"]').before('<span class="w3-normal w3-text-red errors">The field is filled improperly.</span>')
         }
         if(!regex_message.test($('textarea[name="your_message"]').val()))
         {
-            $('textarea[name="your_message"]').before('<span class="w3-medium w3-text-red errors">The field is filled improperly.</span>')
+            $('textarea[name="your_message"]').before('<span class="w3-normal w3-text-red errors">The field is filled improperly.</span>')
         }
         if(!regex_email.test($('input[name="your_email"]').val()))
         {
-            $('input[name="your_email"]').before('<span class="w3-medium w3-text-red errors">The field is filled improperly.</span>')
+            $('input[name="your_email"]').before('<span class="w3-normal w3-text-red errors">The field is filled improperly.</span>')
         }
         return false;
     }
@@ -164,7 +200,7 @@ $('#form-addtag').submit(function(){
 
         if(!regex_tag.test($('input[name="tag"]').val()))
         {
-            $('input[name="tag"]').before('<span class="w3-medium w3-text-red errors">The field is filled improperly.</span>')
+            $('input[name="tag"]').before('<span class="w3-normal w3-text-red errors">The field is filled improperly.</span>')
         }
         return false;
     }
@@ -182,11 +218,11 @@ $('#form-addtag').submit(function(){
 
         if(!regex_title.test($('input[name="phototitle"]').val()))
         {
-            $('input[name="phototitle"]').before('<span class="w3-medium w3-text-red errors">The field is filled improperly.</span>')
+            $('input[name="phototitle"]').before('<span class="w3-normal w3-text-red errors">The field is filled improperly.</span>')
         }
         if(!regex_description.test($('textarea[name="photodescription"]').val()))
         {
-            $('textarea[name="photodescription"]').before('<span class="w3-medium w3-text-red errors">The field is filled improperly.</span>')
+            $('textarea[name="photodescription"]').before('<span class="w3-normal w3-text-red errors">The field is filled improperly.</span>')
         }
         return false;
     }

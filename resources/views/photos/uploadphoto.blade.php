@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('photos.head')
-<body class="w3-black">
+<body class="w3-light-grey">
 
   <!--<h2>Upload Photo</h2>-->
 
@@ -18,21 +18,21 @@
 </div>
 
   {{ Form::open(['url' => '/admin/photos/upload', 'method' => 'POST', 'files' => true, 'id' => 'form-uploadphoto']) }}
-  {{ Form::label('phototitle', 'title', ['class' => 'w3-label w3-text-grey w3-hover-text-white']) }}
+  {{ Form::label('phototitle', 'title', ['class' => 'w3-label w3-text-black w3-hover-text-white']) }}
   @if($errors->has('phototitle'))
     @foreach($errors->get('phototitle') as $error)
       <span class="w3-medium w3-text-red errors">{{ $error }} </span>
     @endforeach
   @endif
   {{ Form::text('phototitle', null, ['class' => 'w3-input']) }}
-  {{ Form::label('photodescription', 'description', ['class' => 'w3-label w3-text-grey w3-hover-text-white']) }}
+  {{ Form::label('photodescription', 'description', ['class' => 'w3-label w3-text-black w3-hover-text-white']) }}
   @if($errors->has('photodescription'))
     @foreach($errors->get('photodescription') as $error)
       <span class="w3-medium w3-text-red errors">{{ $error }} </span>
     @endforeach
   @endif
   {{ Form::textarea('photodescription', null, ['class' => 'w3-input', 'rows' => '4']) }}
-  {{ Form::label('photo', 'add photo', ['class' => 'w3-label w3-text-grey w3-hover-text-white']) }}
+  {{ Form::label('photo', 'add photo', ['class' => 'w3-label w3-text-black w3-hover-text-white']) }}
   @if($errors->has('photo'))
     @foreach($errors->get('photo') as $error)
       <span class="w3-medium w3-text-red errors">{{ $error }} </span>
@@ -41,7 +41,7 @@
   <br>
   {{ Form::file('photo') }}
   <br>
-  {{ Form::label('phototags', 'tags', ['class' => 'w3-label w3-text-grey w3-hover-text-white']) }}
+  {{ Form::label('phototags', 'tags', ['class' => 'w3-label w3-text-black w3-hover-text-white']) }}
   @if($errors->has('phototags'))
     @foreach($errors->get('phototags') as $error)
       <span class="w3-medium w3-text-red errors">{{ $error }} </span>
@@ -51,8 +51,8 @@
   {{ Form::select('phototags[]', $tags_arr, null, ['multiple' => true]) }}
   <br>
   <br>
-  {{ Form::submit('add', ['class' => 'w3-btn w3-text-grey w3-hover-text-white']) }}
-  {{ Form::reset('clean', ['class' => 'w3-btn w3-text-grey w3-hover-text-white']) }}
+  {{ Form::submit('add', ['class' => 'w3-btn w3-light-grey w3-text-black']) }}
+  {{ Form::reset('clean', ['class' => 'w3-btn w3-light-grey w3-text-black']) }}
   {{ Form::close() }}
     </div>
   </div>

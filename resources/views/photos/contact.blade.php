@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('photos.head')
-<body class="w3-black">
+<body class="w3-light-grey">
 
   
 
@@ -17,33 +17,33 @@
 </div>
 
   {{ Form::open(['url' => '/photos/contact', 'method' => 'POST', 'name' => 'contact']) }}
-  {{ Form::label('your_name', 'your name', ['class' => 'w3-label w3-text-grey w3-hover-text-white']) }}
+  {{ Form::label('your_name', 'your name', ['class' => 'w3-label w3-text-black w3-hover-text-white']) }}
   @if($errors->has('your_name'))
     @foreach($errors->get('your_name') as $error)
       <span class="w3-medium w3-text-red errors">{{ $error }} </span>
     @endforeach
   @endif
   {{ Form::text('your_name', null, ['class' => 'w3-input', 'placeholder' => '*required']) }}
-  {{ Form::label('your_email', 'your e-mail', ['class' => 'w3-label w3-text-grey w3-hover-text-white']) }}
+  {{ Form::label('your_email', 'your e-mail', ['class' => 'w3-label w3-text-black w3-hover-text-white']) }}
   @if($errors->has('your_email'))
     @foreach($errors->get('your_email') as $error)
       <span class="w3-medium w3-text-red errors">{{ $error }} </span>
     @endforeach
   @endif
   {{ Form::email('your_email', null, ['class' => 'w3-input', 'placeholder' => '*required']) }}
-  {{ Form::label('your_message', 'your message', ['class' => 'w3-label w3-text-grey w3-hover-text-white']) }}
+  {{ Form::label('your_message', 'your message', ['class' => 'w3-label w3-text-black w3-hover-text-white']) }}
   @if($errors->has('your_message'))
     @foreach($errors->get('your_message') as $error)
       <span class="w3-medium w3-text-red errors">{{ $error }} </span>
     @endforeach
   @endif
   {{ Form::textarea('your_message', null, ['class' => 'w3-input', 'placeholder' => '*required', 'rows' => '4']) }}
-  {{ Form::label('cc_myself', 'do you want to receive the message copy?', ['class' => 'w3-label w3-text-grey w3-hover-text-white']) }}
+  {{ Form::label('cc_myself', 'do you want to receive the message copy?', ['class' => 'w3-label w3-text-black w3-hover-text-white']) }}
   {{ Form::checkbox('cc_myself', True, True, ['class' => 'w3-check']) }}
   <br>
   <br>
-  {{ Form::submit('send', ['class' => 'w3-btn w3-text-grey w3-hover-text-white']) }}
-  {{ Form::reset('clean', ['class' => 'w3-btn w3-text-grey w3-hover-text-white']) }}
+  {{ Form::submit('send', ['class' => 'w3-btn w3-light-grey w3-text-black']) }}
+  {{ Form::reset('clean', ['class' => 'w3-btn w3-light-grey w3-text-black']) }}
   {{ Form::close() }}
     </div>
   </div>

@@ -95,12 +95,23 @@ class PhotosAdminController extends Controller
              $tags_ids[] = $tags_objects[$i]->id;
             }
 
-            Image::make($photo)->save('photos/normal/' . $name . '.' . 'jpg');
-            $photo_medium = Image::make($photo)->resize(NULL, 700, function($e){
-              $e->aspectRatio();
-            })->save('photos/medium/' . $name . '.jpg');
+            //Image::make($photo)->save('photos/normal/' . $name . '.' . 'jpg');
+            $width = Image::make($photo)->width();
+            if($width > 2048)
+            {
+              Image::make($photo)->resize(2048, NULL, function($e){
+                $e->aspectRatio();
+              })->save('photos/normal/' . $name . '.jpg');
+            }
+            else
+            {
+              Image::make($photo)->save('photos/normal/' . $name . '.' . 'jpg');
+            }
+            //$photo_medium = Image::make($photo)->resize(NULL, 700, function($e){
+              //$e->aspectRatio();
+            //})->save('photos/medium/' . $name . '.jpg');
 
-            $photo_small_color = Image::make($photo)->resize(500, NULL, function($e){
+            $photo_small_color = Image::make($photo)->resize(512, NULL, function($e){
               $e->aspectRatio();
             })->save('photos/small_color/' . $name . '.jpg');
 

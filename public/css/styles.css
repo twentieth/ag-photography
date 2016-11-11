@@ -1,12 +1,12 @@
 .errors
 {
     position: relative;
-    color: white;
+    color: black;
     z-index: 100;
 }
 .success, .info
 {
-	border: 1px solid white;
+	border: 1px solid black;
 	margin-bottom: 30px;
 }
 .warning
@@ -19,40 +19,46 @@
 	border: 1px solid #f44336;
 	margin-bottom: 30px;
 }
-.fa-remove
-{
-	padding-top: 4px;
-}
-.success .fa-remove, .info .fa-remove
-{
-	color: white;
-}
-.warning .fa-remove
-{
-	color: #f44336;
-}
-.error .fa-remove
-{
-	color: #f44336;
-}
-.fa-remove:hover
-{
-	cursor: pointer;
-	color: white;
-}
-.success .fa-remove:hover, .info .fa-remove:hover
-{
-	color: #d4d4d4;
-}
 h2
 {
+	color: black;
 	font-weight: bold;
 }
 .fa-toggle-on
 {
 	display: none;
 }
-.button-toggle
+.fa-toggle-on:hover, .fa-toggle-off:hover
 {
 	cursor: pointer;
+}
+.fa-remove
+{
+	padding-top: 4px;
+}
+.fa-remove:hover
+{
+	cursor: pointer;
+	color: #727272;
+}
+.tag-lightbox:hover
+{
+	color: #727272;
+	background-color: black;
+}
+.open-my-sidenav:hover
+{
+	color: #727272;
+}
+a:hover
+{
+	text-decoration: none;
+}
+.image-small:hover
+{
+	cursor: pointer;
+}
+.message
+{
+	margin-top: 20px;
 }

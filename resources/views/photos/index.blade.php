@@ -1,29 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('photos.head')
-<body class="w3-white">
-  
-<!-- Sidenav -->
-<nav class="w3-sidenav w3-black w3-card-2 w3-animate-top w3-center w3-xxlarge my-sidenav" style="display:none;padding-top:150px">
-  <a href="#" class="w3-closenav w3-jumbo w3-right w3-display-topright close-my-sidenav" style="padding:6px 24px">
-    <i class="fa fa-remove"></i>
-  </a>
-  <a href="/photos/index" class="w3-text-grey w3-hover-black">Home</a>
-  @if(isset($tags))
-  <div class="w3-dropdown-click">
-    <a href="javascript:void(0)" class="w3-text-grey w3-hover-light-grey dropdown-content-click-cathegories">Cathegories</a>
-    <div class="w3-dropdown-content dropdown-content-cathegories">
-      @foreach($tags as $tag)
-        <a class="w3-black w3-text-grey w3-hover-black w3-xlarge" href="/photos/index/{{{ $tag->tag }}}">{{ $tag->tag }}</a>
-      @endforeach
-    </div>
-  </div>
-  @endif
-  <a href="/admin/photos/upload" target="_blank" class="w3-text-grey w3-hover-black">Add a new photo</a>
-  <a href="/admin/tags/add" target="_blank" class="w3-text-grey w3-hover-black">Add a new tag</a>
-  <a href="/photos/contact" class="w3-text-grey w3-hover-black">Contact</a>
-  <a href="javascript:void(0)" class="w3-text-grey w3-hover-light-grey">About</a>
-</nav>
+<body class="w3-light-grey">
 
 <!-- Lightbox -->
 <section class="w3-sidenav w3-black w3-animate-top w3-center w3-xxlarge lightbox" style="display:none;padding-top:150px">
@@ -53,7 +31,7 @@
         </div>
         <div class="w3-row">
           <div class="w3-margin tags-container">
-            <span class="tags-lightbox"></span>
+            <span class="w3-small tags-lightbox"></span>
           </div>
         </div>
       </div>
@@ -62,13 +40,12 @@
 </section>
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-content" style="max-width:1500px">
+<div class="w3-content" style="max-width:2048px">
  
+@include('photos.sidenav')
 
 <!-- Header -->
 <header class="w3-container w3-padding-32 w3-center w3-margin-bottom">
-  <span class="w3-opennav w3-xxlarge w3-right w3-margin-right open-my-sidenav"><i class="fa fa-bars"></i></span>
-  <div class="w3-clear"></div>
   <h1 class="w3-xxxlarge">Adam Guła Photography</h1>
   <p class="w3-xlarge">Image gallery</p>
   <p class="w3-padding-16"><i onclick="myFunction()" class="fa fa-toggle-off w3-xxlarge button-toggle"></i><i onclick="myFunction()" class="fa fa-toggle-on w3-xxlarge button-toggle"></i></p>
@@ -77,7 +54,10 @@
 <!-- Photo Grid -->
 <div class="w3-row" id="myGrid" style="margin-bottom:128px">
 
-<?php $x = 0; ?>
+@if($count >= 4)
+<?php 
+  $x = 0;
+?>
 @foreach($photos as $photo)
 
 <?php
@@ -92,12 +72,12 @@
     if($x===0 || $x%$count===0)
     {
   ?>
-      <div class="w3-third">
+      <div class="w3-quarter">
   <?php
     }
   ?>
   <!--<span onclick="w3_open_lightbox()">{{ HTML::image("/storage/photos/medium/" . $photo->name . '.jpg', $photo->title, array('style' => 'width: 100%;', 'class' => 'w3-image image-small')) }}</span>-->
-  <img style="width:100%;" class="w3-image w3-greyscale w3-hover-normal image-small" src="/photos/small_color/{{ $photo->name }}.jpg" alt="{{ $photo->title }}">
+  <img style="width:100%;" class="w3-image w3-greyscale-max image-small" src="/photos/small_color/{{ $photo->name }}.jpg" alt="{{ $photo->title }}">
   <span class="title-hidden" style="display:none;">{{ $photo->title }}</span>
   <span class="description-hidden" style="display:none;">{{ $photo->description }}</span>
   <span class="tags-hidden" style="display:none;">
@@ -106,8 +86,30 @@
     @endforeach
   </span>
   
-  <?php $x++; ?>
+<?php
+  $x++;
+?>
 @endforeach
+
+@elseif($count===0)
+<div class="w3-row w3-center">
+  There are no photos. <a href="/admin/photos/upload">Click</a> to add a new one.
+</div>
+@elseif($count>0)
+  @foreach($photos as $photo)
+    <div class="w3-quarter">
+      <img style="width:100%;" class="w3-image w3-greyscale-max image-small" src="/photos/small_color/{{ $photo->name }}.jpg" alt="{{ $photo->title }}">
+      <span class="title-hidden" style="display:none;">{{ $photo->title }}</span>
+      <span class="description-hidden" style="display:none;">{{ $photo->description }}</span>
+      <span class="tags-hidden" style="display:none;">
+    @foreach($photo->tags as $tag)
+      {{ $tag->tag }} 
+    @endforeach
+  </span>
+    </div>
+  @endforeach
+@endif
+
 </div>
 <!-- End Page Content -->
 </div>
@@ -118,7 +120,7 @@
    <a href="#" class="w3-hover-text-indigo"><i class="fa fa-facebook-official"></i></a>
    <a href="#" class="w3-hover-text-grey"><i class="fa fa-flickr"></i></a>
  </div>
-  <p style="font-weight:normal">Designed by <a href="/photos/contact" target="_blank" class="w3-hover-text-green">Adam Guła</a></p>
+  <p style="font-weight:normal">Designed by <a href="/photos/contact" target="_blank" class="designed">Adam Guła</a></p>
 </footer>
  
 <script>

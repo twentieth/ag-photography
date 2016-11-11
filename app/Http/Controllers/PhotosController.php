@@ -30,21 +30,29 @@ class PhotosController extends Controller
     {
         if($request->isMethod('GET'))
         {
-            if($tag === null)
+            $photos = Photo::all();
+            if($photos->count() != 0)
             {
-                $tag_to_ajax = $tag;
-                $photos = Photo::all();
-                $count = count($photos) / 3;
-                $count = (int)$count;
+                if($tag === null)
+                {
+                    $tag_to_ajax = $tag;
+                    //$photos = Photo::all();
+                    $count = count($photos) / 4;
+                }
+                else
+                {
+                    $tag_to_ajax = $tag;
+                    $tag = Tag::where('tag', $tag)->first();
+                    $photos = $tag->photos;
+                    $count = count($photos) / 4;
+                }
             }
             else
             {
-                $tag_to_ajax = $tag;
-                $tag = Tag::where('tag', $tag)->first();
-                $photos = $tag->photos;
-                $count = count($photos) / 3;
-                $count = (int)$count;
+                $count = 0;
+                $tag_to_ajax = '';
             }
+            
         }
         if($request->ajax())
         {
@@ -109,6 +117,7 @@ class PhotosController extends Controller
                 foreach ($collection->tags as $tag) {
                     $tags .= $tag->tag . ' ';
                 }
+                $tags = trim($tags);
                 return response()->json(['title' => $collection->title, 'name' => $collection->name, 'description' => $collection->description, 'tags' => $tags]);
             }
         }
