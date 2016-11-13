@@ -14,7 +14,7 @@
   <h2 class="w3-xxlarge">Add a new tag</h2>
 </div>
 
-  {{ Form::open(['url' => '/admin/tags/add', 'method' => 'POST', 'id' => 'form-addtag']) }}
+  {{ Form::open(['url' => '/photos/admin/addtag', 'method' => 'POST', 'id' => 'form-addtag']) }}
   {{ Form::label('tag', 'tag', ['class' => 'w3-label w3-text-black w3-hover-text-white']) }}
   @if($errors->has('tag'))
     @foreach($errors->get('tag') as $error)

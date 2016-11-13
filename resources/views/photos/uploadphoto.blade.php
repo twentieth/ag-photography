@@ -17,7 +17,7 @@
   <h2 class="w3-xxlarge">Upload a new photo</h2>
 </div>
 
-  {{ Form::open(['url' => '/admin/photos/upload', 'method' => 'POST', 'files' => true, 'id' => 'form-uploadphoto']) }}
+  {{ Form::open(['url' => '/photos/admin/uploadphoto', 'method' => 'POST', 'files' => true, 'id' => 'form-uploadphoto']) }}
   {{ Form::label('phototitle', 'title', ['class' => 'w3-label w3-text-black w3-hover-text-white']) }}
   @if($errors->has('phototitle'))
     @foreach($errors->get('phototitle') as $error)

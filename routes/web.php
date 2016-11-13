@@ -24,16 +24,20 @@ Route::get('date', function(){
 
 Route::get('/home', 'HomeController@index');
 
-Route::any('photos/index/{tag?}', 'PhotosController@index')->name('index');
+Route::any('/photos/index/{tag?}', 'PhotosController@index')->name('index');
 
 Route::any('/photos/contact', 'PhotosController@contact')->name('contact');
 
-Route::any('/admin/photos/upload', 'PhotosAdminController@uploadphoto')->name('uploadphoto');
+Route::any('/photos/admin/uploadphoto', 'PhotosAdminController@uploadphoto')->name('uploadphoto')->middleware('auth');
 
-Route::any('/admin/tags/add', 'PhotosAdminController@addtag')->name('addtag');
+Route::any('/photos/admin/addtag', 'PhotosAdminController@addtag')->name('addtag')->middleware('auth');
 
-Route::get('/admin/photos/list', 'PhotosController@photoslist')->name('photoslist');
+Route::get('/photos/admin/list', 'PhotosController@photoslist')->name('photoslist');
 
-Route::get('/admin/photos/photo/{id}', 'PhotosController@photo');
+Route::get('/photos/admin/photo/{id}', 'PhotosController@photo');
 
 Route::get('/sessions', 'TestController@sessions')->name('sessions');
+
+Route::get('/photos/admin/logout', 'PhotosAdminController@logout')->name('logout');
+
+Route::get('/photos/admin/previous', 'PhotosAdminController@previous')->name('previous');

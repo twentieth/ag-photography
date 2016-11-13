@@ -28,6 +28,9 @@ class PhotosController extends Controller
     /************************************************/
     public function index(Request $request, $tag=null)
     {
+        $previous = $request->route()->getName();
+        $request->session()->put('previous', $previous);
+        
         if($request->isMethod('GET'))
         {
             $photos = Photo::all();
@@ -128,6 +131,9 @@ class PhotosController extends Controller
     /***************************************/
     public function contact(Request $request)
     {
+        $previous = $request->route()->getName();
+        
+        $request->session()->put('previous', $previous);
         if($request->isMethod('GET'))
         {
             $tags = Tag::all();

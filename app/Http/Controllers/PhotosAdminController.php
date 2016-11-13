@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Requests;
 use Image;
 use App\Photo;
@@ -14,19 +16,19 @@ class PhotosAdminController extends Controller
     /*******************************************/
     public function uploadphoto(Request $request)
     {
-      if($request->isMethod('GET'))
-      {
-        $tags = Tag::all();
-        $tags_arr = array();
-  		foreach($tags as $tag)
-  		{
-    		$tags_arr[$tag->id] = $tag->tag;
-  		}		
-        return view('photos.uploadphoto', ['tags' => $tags, 'tags_arr' => $tags_arr]);
-      }
-      if($request->isMethod('POST'))
-      {
-      	$rules = [
+        if($request->isMethod('GET'))
+        {
+          $tags = Tag::all();
+          $tags_arr = array();
+  		    foreach($tags as $tag)
+  		    {
+    		    $tags_arr[$tag->id] = $tag->tag;
+  		    }		
+          return view('photos.uploadphoto', ['tags' => $tags, 'tags_arr' => $tags_arr]);
+        }
+        if($request->isMethod('POST'))
+        {
+      	     $rules = [
                 'phototitle' => 'max:100',
                 'photodescription' => 'max:500',
                 'photo' => 'required|image|mimes:jpeg,jpg,png,JPG,JPEG|max:102400',
@@ -39,108 +41,105 @@ class PhotosAdminController extends Controller
                 'mimes' => 'The file must be an image file *.jpg, *.jpeg, *.JPG, *.JPEG, *.png.',
             ];
 
-            $this->validate($request, $rules, $messages);
-        if($request->hasFile('photo'))
-        {
-
-          if($request->file('photo')->isValid())
+          $this->validate($request, $rules, $messages);
+          if($request->hasFile('photo'))
           {
-            //////////// input text
-            $title = trim($request->input('phototitle'));
-            $ifExists = Photo::where('title', $title)->exists();
-            if($ifExists)
+            if($request->file('photo')->isValid())
             {
-              return redirect()->route('uploadphoto')->withInput()->with(['message_type' => 'warning', 'text' => 'Zmień tytuł.']);
-            }
-            $description = trim($request->input('photodescription'));
-
-            //////////// input photo
-            $photo = $request->file('photo');
-            $ext = $photo->extension();
-            if($ext === 'jpeg' || $ext === 'JPG' || $ext === 'JPEG')
-            {
-              $ext = 'jpg';
-            }
-            function randomStringFromFigures($x)
-                {
-                  $str = '';
-                  for($i=0;$i<$x;$i++)
-                  {
-                    $str .= (string)rand(0, 9);
-                  }
-                  return $str;
-                }
-            $name = randomStringFromFigures(10);
-            while(True)
-            {
-              $ifExists = Photo::where('name', $name)->exists();
+              //////////// input text
+              $title = trim($request->input('phototitle'));
+              $ifExists = Photo::where('title', $title)->exists();
               if($ifExists)
               {
-                $name = randomStringFromFigures(10);
-                continue;
+                return redirect()->route('uploadphoto')->withInput()->with(['message_type' => 'warning', 'text' => 'Zmień tytuł.']);
+              }
+              $description = trim($request->input('photodescription'));
+
+              //////////// input photo
+              $photo = $request->file('photo');
+              $ext = $photo->extension();
+              if($ext === 'jpeg' || $ext === 'JPG' || $ext === 'JPEG')
+              {
+                $ext = 'jpg';
+              }
+              function randomStringFromFigures($x)
+              {
+                $str = '';
+                for($i=0;$i<$x;$i++)
+                {
+                  $str .= (string)rand(0, 9);
+                }
+                return $str;
+              }
+              $name = randomStringFromFigures(10);
+              while(True)
+              {
+                $ifExists = Photo::where('name', $name)->exists();
+                if($ifExists)
+                {
+                  $name = randomStringFromFigures(10);
+                  continue;
+                }
+                else
+                {
+                  break;
+                }
+              }
+
+              $tags_ids = array();
+              $tags_objects = array();
+              $tags_input = $request->input('phototags');
+              for($i=0; $i<count($tags_input); $i++)
+              {
+                $val = (int)$tags_input[$i];
+                $tags_objects[$i] = Tag::find($val);
+                $tags_ids[] = $tags_objects[$i]->id;
+              }
+
+              //Image::make($photo)->save('photos/normal/' . $name . '.' . 'jpg');
+              $width = Image::make($photo)->width();
+              if($width > 1920)
+              {
+                Image::make($photo)->resize(1920, NULL, function($e){
+                  $e->aspectRatio();
+                })->save('photos/normal/' . $name . '.jpg');
               }
               else
               {
-                break;
+                Image::make($photo)->save('photos/normal/' . $name . '.' . 'jpg');
               }
-            }
-
-            $tags_ids = array();
-            $tags_objects = array();
-            $tags_input = $request->input('phototags');
-            for($i=0; $i<count($tags_input); $i++)
-            {
-             $val = (int)$tags_input[$i];
-             $tags_objects[$i] = Tag::find($val);
-             $tags_ids[] = $tags_objects[$i]->id;
-            }
-
-            //Image::make($photo)->save('photos/normal/' . $name . '.' . 'jpg');
-            $width = Image::make($photo)->width();
-            if($width > 1920)
-            {
-              Image::make($photo)->resize(1920, NULL, function($e){
+              $photo_medium = Image::make($photo)->resize(NULL, 1000, function($e){
                 $e->aspectRatio();
-              })->save('photos/normal/' . $name . '.jpg');
+              })->save('photos/medium/' . $name . '.jpg');
+
+              $photo_small_color = Image::make($photo)->resize(480, NULL, function($e){
+                $e->aspectRatio();
+              })->save('photos/small_color/' . $name . '.jpg');
+        
+              ///////////// store in db
+              $o = new Photo();
+              $o->title = $title;
+              $o->description = $description;
+              $o->name = (string)$name;
+              $o->ext = $ext;
+
+              $o->save();
+
+              ///////////// add tags
+              $photo = Photo::where('name', $name)->first();
+              $photo->tags()->attach($tags_ids);
+              return redirect()->route('uploadphoto')->with(['message_type' => 'success', 'message_text' => 'Photo has been uploaded.']);
             }
             else
             {
-              Image::make($photo)->save('photos/normal/' . $name . '.' . 'jpg');
+              return redirect()->route('uploadphoto')->with(['message_type' => 'warning', 'message_text' => 'Załączony plik jest nieprawidłowy.']);
             }
-            $photo_medium = Image::make($photo)->resize(NULL, 1000, function($e){
-              $e->aspectRatio();
-            })->save('photos/medium/' . $name . '.jpg');
-
-            $photo_small_color = Image::make($photo)->resize(480, NULL, function($e){
-              $e->aspectRatio();
-            })->save('photos/small_color/' . $name . '.jpg');
-        
-            ///////////// store in db
-            $o = new Photo();
-            $o->title = $title;
-            $o->description = $description;
-            $o->name = (string)$name;
-            $o->ext = $ext;
-
-            $o->save();
-
-            ///////////// add tags
-            $photo = Photo::where('name', $name)->first();
-            $photo->tags()->attach($tags_ids);
-
-
-            return redirect()->route('uploadphoto')->with(['message_type' => 'success', 'message_text' => 'Photo has been uploaded.']);
           }
           else
           {
-            return redirect()->route('uploadphoto')->with(['message_type' => 'warning', 'message_text' => 'Załączony plik jest nieprawidłowy.']);
+            return redirect()->route('uploadphoto')->with(['message_type' => 'warning', 'message_text' => 'Załącz plik.']);
           }
         }
-        else
-        {
-          return redirect()->route('uploadphoto')->with(['message_type' => 'warning', 'message_text' => 'Załącz plik.']);
-        }
-      }
     }
 
     /**************************************/
@@ -168,7 +167,7 @@ class PhotosAdminController extends Controller
 
         if($ifExists)
         {
-         return redirect()->route('addtag')->withInput()->with(['message_type' => 'warning', 'message_text' => 'Podany tag już istnieje w bazie danych. Wprowadź inny.']);
+         return redirect()->route('addtag')->withInput()->with(['message_type' => 'warning', 'message_text' => 'The tag already exists in the database. Insert another one.']);
         }
         else
         {
@@ -176,8 +175,25 @@ class PhotosAdminController extends Controller
           $o->tag = $tag_input;
           $o->save();
 
-         return redirect()->route('addtag')->with(['message_type' => 'success', 'message_text' => 'Tag został dodany do bazy danych.']);
+         return redirect()->route('addtag')->with(['message_type' => 'success', 'message_text' => 'The tag has been added to the database.']);
         }
+      }
+    }
+
+    public function logout()
+    {
+      Auth::logout();
+      return redirect()->route('index');
+    }
+    public function previous(Request $request)
+    {
+      if($request->session()->exists('previous'))
+      {
+        return redirect()->route($request->session()->get('previous'));
+      }
+      else
+      {
+        return redirect('/photos/index');
       }
     }
 }

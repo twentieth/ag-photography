@@ -15,10 +15,19 @@
     </div>
   </div>
   @endif
-  <a href="/admin/photos/upload" target="_blank" class="w3-text-grey w3-hover-black">Add a new photo</a>
-  <a href="/admin/tags/add" target="_blank" class="w3-text-grey w3-hover-black">Add a new tag</a>
+  @if(Auth::check())
+    <a href="/photos/admin/uploadphoto" target="_blank" class="w3-text-grey w3-hover-black">Add a new photo</a>
+  @endif
+  @if(Auth::check())
+    <a href="/photos/admin/addtag" target="_blank" class="w3-text-grey w3-hover-black">Add a new tag</a>
+  @endif
   <a href="/photos/contact" class="w3-text-grey w3-hover-black">Contact</a>
   <a href="javascript:void(0)" class="w3-text-grey w3-hover-black">About</a>
+  @if(Auth::check())
+    <a href="/photos/admin/logout" class="w3-text-grey w3-hover-black">Log Out</a>
+  @else
+    <a href="/login" class="w3-text-grey w3-hover-black">Log In</a>
+  @endif
 </nav>
 
 
