@@ -97,9 +97,9 @@ class PhotosAdminController extends Controller
 
             //Image::make($photo)->save('photos/normal/' . $name . '.' . 'jpg');
             $width = Image::make($photo)->width();
-            if($width > 2048)
+            if($width > 1920)
             {
-              Image::make($photo)->resize(2048, NULL, function($e){
+              Image::make($photo)->resize(1920, NULL, function($e){
                 $e->aspectRatio();
               })->save('photos/normal/' . $name . '.jpg');
             }
@@ -107,17 +107,13 @@ class PhotosAdminController extends Controller
             {
               Image::make($photo)->save('photos/normal/' . $name . '.' . 'jpg');
             }
-            //$photo_medium = Image::make($photo)->resize(NULL, 700, function($e){
-              //$e->aspectRatio();
-            //})->save('photos/medium/' . $name . '.jpg');
+            $photo_medium = Image::make($photo)->resize(NULL, 1000, function($e){
+              $e->aspectRatio();
+            })->save('photos/medium/' . $name . '.jpg');
 
-            $photo_small_color = Image::make($photo)->resize(512, NULL, function($e){
+            $photo_small_color = Image::make($photo)->resize(480, NULL, function($e){
               $e->aspectRatio();
             })->save('photos/small_color/' . $name . '.jpg');
-
-            //$photo_small_bw = Image::make($photo)->resize(NULL, 500, function($e){
-             //$e->aspectRatio();
-            //})->greyscale()->save('photos/small_bw/' . $name . '.jpg');
         
             ///////////// store in db
             $o = new Photo();

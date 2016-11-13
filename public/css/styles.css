@@ -58,6 +58,10 @@ a:hover
 {
 	cursor: pointer;
 }
+.image-lightbox
+{
+	background: url(/photos/2.gif) 50% no-repeat;
+}
 .message
 {
 	margin-top: 20px;

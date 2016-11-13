@@ -17,8 +17,7 @@
             <span class="title-lightbox"></span>
           </div>
         </div>
-        <div class="w3-row w3-display-container">
-          <!--{{ HTML::image("/storage/photos/medium/" . '108504139' . '.jpg', 'łąka', array('class' => 'w3-image w3-border w3-border-light-grey image')) }}-->
+        <div class="w3-row w3-display-container w3-center">
             <img class="w3-image w3-border w3-border-light-grey image-lightbox" src="" alt="">
             <div class="w3-display-left w3-container button-left"><i class="fa fa-chevron-left button"></i></div>
             <div class="w3-display-right w3-container button-right"><i class="fa fa-chevron-right button"></i></div>
@@ -39,8 +38,7 @@
   </div>
 </section>
 
-<!-- !PAGE CONTENT! -->
-<div class="w3-content" style="max-width:2048px">
+
  
 @include('photos.sidenav')
 
@@ -51,6 +49,9 @@
   <p class="w3-padding-16"><i onclick="myFunction()" class="fa fa-toggle-off w3-xxlarge button-toggle"></i><i onclick="myFunction()" class="fa fa-toggle-on w3-xxlarge button-toggle"></i></p>
 </header>
 
+<!-- !PAGE CONTENT! -->
+<div class="w3-content" style="max-width:1920px">
+  
 <!-- Photo Grid -->
 <div class="w3-row" id="myGrid" style="margin-bottom:128px">
 

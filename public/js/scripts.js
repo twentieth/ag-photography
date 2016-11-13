@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+
+
 /*
  CSS START
  */
@@ -17,7 +19,7 @@ $('.image-small').hover(function(){
 }, function(){
 	$(this).addClass('w3-greyscale-max')
 })
-$('.image-lightbox').css({'maxHeight': window.screen.height*0.8, 'maxWidth': window.screen.width*0.85})
+$('.image-lightbox').css({'maxHeight': window.screen.height*0.8, 'maxWidth': '85%'})
 
 /*
  CSS END
@@ -35,32 +37,32 @@ $('.image-small').on('click', function(){
 	var src = $(this).attr('src')
 	var title = $(this).next().text()
 	var description = $(this).next().next().text()
-    var tags = $(this).next().next().next().text()
     var name = src.substr(20,10)
-    $('.image-lightbox').attr('src', '/photos/normal/' + name + '.jpg')
     $('.title-lightbox').text(title)
     $('.description-lightbox').text(description)
-    var tags = tags.split(' ')
-    tags.pop()
-            if(tags != '')
+    $('.image-lightbox').attr('src', '/photos/medium/' + name + '.jpg')
+    $('.image-lightbox').load(function(){
+        var tags = $(this).next().next().next().text()
+        var tags = tags.split(' ')
+        tags.pop()
+        if(tags != '')
+        {
+            var tags_urls = 'Cathegories: '
+            for(var i=0;i<tags.length;i++)
             {
-                var tags_urls = 'Cathegories: '
-                for(var i=0;i<tags.length;i++)
+                var tag = tags[i].toString().trim()
+                if(tag)
                 {
-                    var tag = tags[i].toString().trim()
-                    if(tag)
-                    {
-                        tags_urls += '<a class="w3-padding w3-margin w3-tag w3-round w3-center tag-lightbox" href="/photos/index/' + tag + '" style="display:inline-block;">' + tag + ' </a>'
-                    }
+                    tags_urls += '<a class="w3-padding w3-margin w3-tag w3-round w3-center tag-lightbox" href="/photos/index/' + tag + '" style="display:inline-block;">' + tag + ' </a>'
                 }
-                $('.tags-lightbox').html(tags_urls)
             }
-            else
-            {
-                $('.tags-lightbox').html('No cathegories.')
-            }
-    $('.image-lightbox, .title-lightbox, .description-lightbox, .tags-lightbox').show(function(){
-       	$('.lightbox').css({'width': "100%"}).show()
+            $('.tags-lightbox').html(tags_urls)
+        }
+        else
+        {
+            $('.tags-lightbox').html('No cathegories.')
+        }
+        $('.lightbox').css({'width': "100%"}).show()
     })
 })
 
@@ -110,43 +112,40 @@ $('.button-right, .button-left').on('click', function(e){
     }
 
     $('.lightbox').fadeOut(function(){
-    	$('.image-lightbox, .title-lightbox, .description-lightbox, .tags-lightbox').hide()
     	$.ajax({
         	url: url,
         	type: 'POST',
         	data: data
     	}).done(function(data){
-        	$('.image-lightbox').attr('src', '/photos/normal/' + data.name + '.jpg')
+            $('.image-lightbox').attr('src', '/photos/medium/' + data.name + '.jpg')
         	$('.title-lightbox').text(data.title)
         	$('.description-lightbox').text(data.description)
-            var tags = data.tags.split(' ')
-            tags.pop()
-            if(tags != '')
-            {
-                var tags_urls = 'Cathegories: '
-                for(var i=0;i<tags.length;i++)
+            $('.image-lightbox').load(function(){
+                var tags = data.tags.split(' ')
+                tags.pop()
+                if(tags != '')
                 {
-                    var tag = tags[i].toString().trim()
-                    if(tag)
+                    var tags_urls = 'Cathegories: '
+                    for(var i=0;i<tags.length;i++)
                     {
-                        tags_urls += '<a class="w3-padding w3-margin w3-tag w3-round w3-center tag-lightbox" href="/photos/index/' + tag + '" style="display:inline-block;">' + tag + ' </a>'
+                        var tag = tags[i].toString().trim()
+                        if(tag)
+                        {
+                            tags_urls += '<a class="w3-padding w3-margin w3-tag w3-round w3-center tag-lightbox" href="/photos/index/' + tag + '" style="display:inline-block;">' + tag + ' </a>'
+                        }
                     }
+                    $('.tags-lightbox').html(tags_urls)
                 }
-                $('.tags-lightbox').html(tags_urls)
-            }
-            else
-            {
-                $('.tags-lightbox').html('No cathegories.')
-            }
-        	$('.image-lightbox, .title-lightbox, .description-lightbox, .tags-lightbox').show(function(){
-        		$('.lightbox').show()
-        	})
-
-    	}).fail(function(){
+                else
+                {
+                    $('.tags-lightbox').html('No cathegories.')
+                }
+                $('.lightbox').css({'width': "100%"}).show()
+            })
+    }).fail(function(){
         	alert('Error')
     	})
     })
-    
 })
 
 $('form[name="contact"]').on('submit', function(e)
