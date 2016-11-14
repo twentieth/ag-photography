@@ -1,4 +1,4 @@
-<!-- Sidenav Second -->
+<!-- Sidenav -->
 
 <nav class="w3-sidenav w3-black w3-card-2 w3-animate-top w3-center w3-xxlarge my-sidenav" style="display:none;padding-top:150px;position:fixed;top:0;bottom:0;left:0;right:0;z-index:50;">
   <a href="#" class="w3-closenav w3-jumbo w3-right w3-display-topright close-my-sidenav" style="padding:6px 24px">
@@ -22,7 +22,7 @@
     <a href="/photos/admin/addtag" target="_blank" class="w3-text-grey w3-hover-black">Add a new tag</a>
   @endif
   <a href="/photos/contact" class="w3-text-grey w3-hover-black">Contact</a>
-  <a href="javascript:void(0)" class="w3-text-grey w3-hover-black">About</a>
+  <!--<a href="javascript:void(0)" class="w3-text-grey w3-hover-black">About</a>-->
   @if(Auth::check())
     <a href="/photos/admin/logout" class="w3-text-grey w3-hover-black">Log Out</a>
   @else

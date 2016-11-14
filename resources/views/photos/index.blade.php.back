@@ -55,40 +55,71 @@
 <!-- Photo Grid -->
 <div class="w3-row" id="myGrid" style="margin-bottom:128px">
 
-@php
+@if($count >= 4)
+<?php 
   $x = 0;
-@endphp
+?>
 @foreach($photos as $photo)
-  @if($x===0)
+
+<?php
+    if($x%$count===0 && $x!==0)
+    {
+  ?>
+      </div>
+  <?php
+    }
+  ?>
+  <?php
+    if($x===0 || $x%$count===0)
+    {
+  ?>
+      <div class="w3-quarter">
+  <?php
+    }
+  ?>
+  <!--<span onclick="w3_open_lightbox()">{{ HTML::image("/storage/photos/medium/" . $photo->name . '.jpg', $photo->title, array('style' => 'width: 100%;', 'class' => 'w3-image image-small')) }}</span>-->
+  <img style="width:100%;" class="w3-image w3-greyscale-max image-small" src="/photos/small_color/{{ $photo->name }}.jpg" alt="{{ $photo->title }}">
+  <span class="title-hidden" style="display:none;">{{ $photo->title }}</span>
+  <span class="description-hidden" style="display:none;">{{ $photo->description }}</span>
+  <span class="tags-hidden" style="display:none;">
+    @foreach($photo->tags as $tag)
+      {{ $tag->tag }} 
+    @endforeach
+  </span>
+  
+<?php
+  $x++;
+?>
+@endforeach
+
+@elseif($count===0)
+<div class="w3-row w3-center">
+  There are no photos. <a href="/admin/photos/upload">Click</a> to add a new one.
+</div>
+@elseif($count>0)
+  @foreach($photos as $photo)
     <div class="w3-quarter">
-  @endif
-  @if($x%3===0 and $x!==0)
-    </div>
-    <div class="w3-quarter">
-  @endif
       <img style="width:100%;" class="w3-image w3-greyscale-max image-small" src="/photos/small_color/{{ $photo->name }}.jpg" alt="{{ $photo->title }}">
       <span class="title-hidden" style="display:none;">{{ $photo->title }}</span>
       <span class="description-hidden" style="display:none;">{{ $photo->description }}</span>
       <span class="tags-hidden" style="display:none;">
-        @foreach($photo->tags as $tag)
-          {{ $tag->tag }} 
-        @endforeach
-      </span>
+    @foreach($photo->tags as $tag)
+      {{ $tag->tag }} 
+    @endforeach
+  </span>
+    </div>
+  @endforeach
+@endif
 
-  @php
-    $x++;
-  @endphp
-@endforeach
 </div>
-
 <!-- End Page Content -->
 </div>
 
 <!-- Footer -->
 <footer class="w3-container w3-padding-64 w3-light-grey w3-center w3-opacity" style="margin-top:128px">
  <div class="w3-xlarge w3-padding-32">
-   <!--<a href="#" class="w3-hover-text-indigo"><i class="fa fa-facebook-official"></i></a>-->
-   <a href="https://www.flickr.com/photos/139384339@N03" class="w3-hover-text-grey" target="_blank"><i class="fa fa-flickr"></i></a>
+   <a href="#" class="w3-hover-text-indigo"><i class="fa fa-facebook-official"></i></a>
+   <a href="#" class="w3-hover-text-grey"><i class="fa fa-flickr"></i></a>
  </div>
   <p style="font-weight:normal">Designed by <a href="/photos/contact" target="_blank" class="designed">Adam Guła</a></p>
 </footer>

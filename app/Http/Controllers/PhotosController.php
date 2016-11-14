@@ -39,15 +39,14 @@ class PhotosController extends Controller
                 if($tag === null)
                 {
                     $tag_to_ajax = $tag;
-                    //$photos = Photo::all();
-                    $count = count($photos) / 4;
+                    $count = $photos->count();
                 }
                 else
                 {
                     $tag_to_ajax = $tag;
                     $tag = Tag::where('tag', $tag)->first();
                     $photos = $tag->photos;
-                    $count = count($photos) / 4;
+                    $count = $photos->count();
                 }
             }
             else

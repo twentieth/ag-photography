@@ -108,7 +108,7 @@ class PhotosAdminController extends Controller
               {
                 Image::make($photo)->save('photos/normal/' . $name . '.' . 'jpg');
               }
-              $photo_medium = Image::make($photo)->resize(NULL, 1000, function($e){
+              $photo_medium = Image::make($photo)->resize(NULL, 1300, function($e){
                 $e->aspectRatio();
               })->save('photos/medium/' . $name . '.jpg');
 
