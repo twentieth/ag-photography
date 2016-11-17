@@ -8,16 +8,19 @@
 {
 	border: 1px solid black;
 	margin-bottom: 30px;
+	color: black;
 }
 .warning
 {
 	border: 1px solid #f44336;
 	margin-bottom: 30px;
+	color: black;
 }
 .error
 {
 	border: 1px solid #f44336;
 	margin-bottom: 30px;
+	color: black;
 }
 h2
 {
@@ -28,7 +31,7 @@ h2
 {
 	display: none;
 }
-.fa-toggle-on:hover, .fa-toggle-off:hover
+.buttons:hover
 {
 	cursor: pointer;
 }

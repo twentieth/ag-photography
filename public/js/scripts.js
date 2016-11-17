@@ -36,16 +36,23 @@ $('.open-my-sidenav').click(function(e){
 $('.image-small').on('click', function(){
 	var src = $(this).attr('src')
 	var title = $(this).next().text()
+    var tags_string = $(this).next().next().next().text()
 	var description = $(this).next().next().text()
     var name = src.substr(20,10)
     $('.title-lightbox').text(title)
     $('.description-lightbox').text(description)
     $('.image-lightbox').attr('src', '/photos/medium/' + name + '.jpg')
     $('.image-lightbox').load(function(){
-        var tags = $(this).next().next().next().text()
-        var tags = tags.split(' ')
-        tags.pop()
-        if(tags != '')
+        var tags_arr = tags_string.split(' ')
+        var tags = []
+        for(var i=0;i<tags_arr.length;i++)
+        {
+            if(tags_arr[i] != '' && tags_arr[i] != '\n')
+            {
+                tags.push(tags_arr[i])
+            }
+        }
+        if(tags.length !== 0)
         {
             var tags_urls = 'Cathegories: '
             for(var i=0;i<tags.length;i++)
@@ -53,7 +60,7 @@ $('.image-small').on('click', function(){
                 var tag = tags[i].toString().trim()
                 if(tag)
                 {
-                    tags_urls += '<a class="w3-padding w3-margin w3-tag w3-round w3-center tag-lightbox" href="/photos/index/' + tag + '" style="display:inline-block;">' + tag + ' </a>'
+                    tags_urls += '<a class="w3-padding w3-margin w3-tag w3-round w3-center tag-lightbox" href="/ag-photography/tag/' + tag + '" style="display:inline-block;">' + tag + ' </a>'
                 }
             }
             $('.tags-lightbox').html(tags_urls)
@@ -87,11 +94,11 @@ $('.button-right, .button-left').on('click', function(e){
     var tag_name = $('.tag-hidden').text()
     if(tag_name != '')
     {
-        var url = '/photos/index/' + tag_name
+        var url = '/ag-photography/tag/' + tag_name
     }
     else
     {
-        var url = '/photos/index'
+        var url = '/'
     }
 
     if(e.target.className.search('fa-chevron-right') !== -1)
@@ -122,7 +129,6 @@ $('.button-right, .button-left').on('click', function(e){
         	$('.description-lightbox').text(data.description)
             $('.image-lightbox').load(function(){
                 var tags = data.tags.split(' ')
-                tags.pop()
                 if(tags != '')
                 {
                     var tags_urls = 'Cathegories: '
@@ -131,7 +137,7 @@ $('.button-right, .button-left').on('click', function(e){
                         var tag = tags[i].toString().trim()
                         if(tag)
                         {
-                            tags_urls += '<a class="w3-padding w3-margin w3-tag w3-round w3-center tag-lightbox" href="/photos/index/' + tag + '" style="display:inline-block;">' + tag + ' </a>'
+                            tags_urls += '<a class="w3-padding w3-margin w3-tag w3-round w3-center tag-lightbox" href="/ag-photography/tag/' + tag + '" style="display:inline-block;">' + tag + ' </a>'
                         }
                     }
                     $('.tags-lightbox').html(tags_urls)
@@ -291,3 +297,4 @@ $('#form-addtag').submit(function(){
 
 
 });
+ 

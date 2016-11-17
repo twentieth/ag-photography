@@ -4,29 +4,29 @@
   <a href="#" class="w3-closenav w3-jumbo w3-right w3-display-topright close-my-sidenav" style="padding:6px 24px">
     <i class="fa fa-remove"></i>
   </a>
-  <a href="/photos/index" class="w3-text-grey w3-hover-black">Home</a>
-  @if($tags->count() != 0)
+  <a href="/" class="w3-text-grey w3-hover-black">Home</a>
+  @if(isset($tags))
   <div class="w3-dropdown-click">
     <a href="javascript:void(0)" class="w3-text-grey w3-hover-light-grey dropdown-content-click-cathegories">Cathegories</a>
     <div class="w3-dropdown-content dropdown-content-cathegories">
       @foreach($tags as $tag)
-        <a class="w3-black w3-text-grey w3-hover-black w3-xlarge" href="/photos/index/{{{ $tag->tag }}}">{{ $tag->tag }}</a>
+        <a class="w3-black w3-text-grey w3-hover-black w3-xlarge" href="/ag-photography/tag/{{{ $tag->tag }}}">{{ $tag->tag }}</a>
       @endforeach
     </div>
   </div>
   @endif
   @if(Auth::check())
-    <a href="/photos/admin/uploadphoto" target="_blank" class="w3-text-grey w3-hover-black">Add a new photo</a>
+    <a href="/ag-photography/admin/uploadphoto" class="w3-text-grey w3-hover-black">Add a new photo</a>
   @endif
   @if(Auth::check())
-    <a href="/photos/admin/addtag" target="_blank" class="w3-text-grey w3-hover-black">Add a new tag</a>
+    <a href="/ag-photography/admin/addtag" class="w3-text-grey w3-hover-black">Add a new tag</a>
   @endif
-  <a href="/photos/contact" class="w3-text-grey w3-hover-black">Contact</a>
+  <a href="/ag-photography/contact" class="w3-text-grey w3-hover-black">Contact</a>
   <!--<a href="javascript:void(0)" class="w3-text-grey w3-hover-black">About</a>-->
   @if(Auth::check())
-    <a href="/photos/admin/logout" class="w3-text-grey w3-hover-black">Log Out</a>
+    <a href="/ag-photography/admin/logout" class="w3-text-grey w3-hover-black">Log Out</a>
   @else
-    <a href="/login" class="w3-text-grey w3-hover-black">Log In</a>
+    <!--<a href="/login" class="w3-text-grey w3-hover-black">Log In</a>-->
   @endif
 </nav>
 

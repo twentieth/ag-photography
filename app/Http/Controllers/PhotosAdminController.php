@@ -128,7 +128,7 @@ class PhotosAdminController extends Controller
               ///////////// add tags
               $photo = Photo::where('name', $name)->first();
               $photo->tags()->attach($tags_ids);
-              return redirect()->route('uploadphoto')->with(['message_type' => 'success', 'message_text' => 'Photo has been uploaded.']);
+              return redirect()->route('uploadphoto')->with(['message_type' => 'success', 'message_text' => 'The picture has been uploaded.']);
             }
             else
             {

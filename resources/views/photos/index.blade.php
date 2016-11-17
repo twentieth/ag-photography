@@ -46,39 +46,58 @@
 <header class="w3-container w3-padding-32 w3-center w3-margin-bottom">
   <h1 class="w3-xxxlarge">Adam Guła Photography</h1>
   <p class="w3-xlarge">Image gallery</p>
-  <p class="w3-padding-16"><i onclick="myFunction()" class="fa fa-toggle-off w3-xxlarge button-toggle"></i><i onclick="myFunction()" class="fa fa-toggle-on w3-xxlarge button-toggle"></i></p>
+  <p class="w3-padding-16 buttons"><i onclick="myFunction()" class="fa fa-toggle-off w3-xxlarge button-toggle"></i><i onclick="myFunction()" class="fa fa-toggle-on w3-xxlarge button-toggle"></i></p>
 </header>
 
 <!-- !PAGE CONTENT! -->
 <div class="w3-content" style="max-width:1920px">
   
 <!-- Photo Grid -->
-<div class="w3-row" id="myGrid" style="margin-bottom:128px">
-
+<div class="w3-row" id="myGrid">
+@if($count>=4)
 @php
-  $x = 0;
+  $x = 1;
 @endphp
 @foreach($photos as $photo)
-  @if($x===0)
+  @if($x===1)
     <div class="w3-quarter">
   @endif
-  @if($x%3===0 and $x!==0)
+    <img style="width:100%;" class="w3-image w3-greyscale-max image-small" src="/photos/small_color/{{ $photo->name }}.jpg" alt="{{ $photo->title }}">
+    <span class="title-hidden" style="display:none;">{{ $photo->title }}</span>
+    <span class="description-hidden" style="display:none;">{{ $photo->description }}</span>
+    <span class="tags-hidden" style="display:none;">
+    @foreach($photo->tags as $tag)
+      {{ $tag->tag }} 
+    @endforeach
+    </span>
+  @if($x%$ratio===0 and $x!==1)
     </div>
     <div class="w3-quarter">
   @endif
-      <img style="width:100%;" class="w3-image w3-greyscale-max image-small" src="/photos/small_color/{{ $photo->name }}.jpg" alt="{{ $photo->title }}">
-      <span class="title-hidden" style="display:none;">{{ $photo->title }}</span>
-      <span class="description-hidden" style="display:none;">{{ $photo->description }}</span>
-      <span class="tags-hidden" style="display:none;">
-        @foreach($photo->tags as $tag)
-          {{ $tag->tag }} 
-        @endforeach
-      </span>
-
+  @if($loop->last)
+    </div>
+  @endif
   @php
     $x++;
   @endphp
 @endforeach
+</div>
+@elseif($count===0)
+  <div class="w3-center">There are no photos. <a href="/ag-photography/admin/uploadphoto">Click</a> to add a new one.</div>
+@else
+  @foreach($photos as $photo)
+    <div class="w3-quarter">
+      <img style="width:100%;" class="w3-image w3-greyscale-max image-small" src="/photos/small_color/{{ $photo->name }}.jpg" alt="{{ $photo->title }}">
+      <span class="title-hidden" style="display:none;">{{ $photo->title }}</span>
+      <span class="description-hidden" style="display:none;">{{ $photo->description }}</span>
+      <span class="tags-hidden" style="display:none;">
+      @foreach($photo->tags as $tag)
+        {{ $tag->tag }} 
+      @endforeach
+      </span>
+    </div>
+  @endforeach
+@endif
 </div>
 
 <!-- End Page Content -->
@@ -90,7 +109,7 @@
    <!--<a href="#" class="w3-hover-text-indigo"><i class="fa fa-facebook-official"></i></a>-->
    <a href="https://www.flickr.com/photos/139384339@N03" class="w3-hover-text-grey" target="_blank"><i class="fa fa-flickr"></i></a>
  </div>
-  <p style="font-weight:normal">Designed by <a href="/photos/contact" target="_blank" class="designed">Adam Guła</a></p>
+  <p style="font-weight:normal">Designed by <a href="/ag-photography/contact" target="_blank" class="designed">Adam Guła</a></p>
 </footer>
  
 <script>

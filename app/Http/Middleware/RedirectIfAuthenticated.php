@@ -17,8 +17,10 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        
+
         if (Auth::guard($guard)->check()) {
-            return redirect('/photos/admin/previous');
+            return redirect('/ag-photography/admin/previous');
 
         }
 

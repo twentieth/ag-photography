@@ -40,6 +40,7 @@ class PhotosController extends Controller
                 {
                     $tag_to_ajax = $tag;
                     $count = $photos->count();
+                    $ratio = $count / 4;
                 }
                 else
                 {
@@ -47,12 +48,14 @@ class PhotosController extends Controller
                     $tag = Tag::where('tag', $tag)->first();
                     $photos = $tag->photos;
                     $count = $photos->count();
+                    $ratio = $count / 4;
                 }
             }
             else
             {
                 $count = 0;
-                $tag_to_ajax = '';
+                $tag_to_ajax = null;
+                $ratio = null;
             }
             
         }
@@ -124,15 +127,15 @@ class PhotosController extends Controller
             }
         }
         $tags = Tag::all();
-        return view('photos.index', ['photos' => $photos, 'count' => $count, 'tags' => $tags, 'tag_to_ajax' => $tag_to_ajax]);
+        return view('photos.index', ['photos' => $photos, 'count' => $count, 'ratio' => $ratio, 'tags' => $tags, 'tag_to_ajax' => $tag_to_ajax]);
     }
 
     /***************************************/
     public function contact(Request $request)
     {
         $previous = $request->route()->getName();
-        
         $request->session()->put('previous', $previous);
+        
         if($request->isMethod('GET'))
         {
             $tags = Tag::all();
@@ -156,24 +159,32 @@ class PhotosController extends Controller
             $name = trim($request->your_name);
             $from = trim($request->your_email);
             $message = trim($request->your_message);
-            $use = ['from' => $from, 'name' => $name];
+            $mail_content = <<<EOT
+Wiadomość od: $name ($from)
 
+$message
+EOT;
+            $mail_content = str_replace("\n", "<br>", $mail_content);
+
+            $mail_headers = "Content-Type: text/html; charset=UTF-8";
             if($request->cc_myself)
             {
-                Mail::send('photos.contact', ['content' => $message], function($message) use ($from, $name){
-                    $message->from('twentiethsite@linux.pl', '[[PHOTOS]]')->to('twentiethsite@linux.pl')->replyTo($from)->subject($name . 'from [[PHOTOS]]');
-                });
+                $to = 'twentiethsite@linux.pl, ' . $from;
             }
             else
             {
-                Mail::send('photos.contact', ['content' => $message], function($message) use ($from, $name){
-                    $message->from('twentiethsite@linux.pl', '[[PHOTOS]]')->to('twentiethsite@linux.pl')->subject($name . 'from [[PHOTOS]]');
-                });
+                $to = 'twentiethsite@linux.pl';
             }
+            $mail = mail($to, '[[ AG-PHOTOGRAPHY ]]', $mail_content, $mail_headers);
             
-            
-            
-            return redirect()->route('contact');
+            if($mail)
+            {
+                return redirect()->route('contact')->with(['message_type' => 'info', 'message_text' => 'Thank you. The message has been sent.']);
+            }
+            else
+            {
+                return redirect()->route('contact')->with(['message_type' => 'warning', 'message_text' => "I'm sorry. The message may not be sent. Please try later."]);
+            }
         }
     }
 }

@@ -13,10 +13,10 @@
 @include('photos.messages')
 
 <div class="w3-row">
-  <h2 class="w3-xxlarge">Send a message</h2>
+  <h2 class="w3-xxxlarge">send a message</h2>
 </div>
 
-  {{ Form::open(['url' => '/photos/contact', 'method' => 'POST', 'name' => 'contact']) }}
+  {{ Form::open(['url' => '/ag-photography/contact', 'method' => 'POST', 'name' => 'contact']) }}
   {{ Form::label('your_name', 'your name', ['class' => 'w3-label w3-text-black w3-hover-text-white']) }}
   @if($errors->has('your_name'))
     @foreach($errors->get('your_name') as $error)

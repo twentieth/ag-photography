@@ -3,9 +3,7 @@
 @include('photos.head')
 <body class="w3-light-grey">
 
-  <!--<h2>Upload Photo</h2>-->
-
-
+ 
 <div class="w3-row">
   <div class="w3-rest">
     <div class="w3-container w3-padding-xxlarge w3-xlarge" id="uploadphoto-form">
@@ -14,10 +12,10 @@
 @include('photos.messages')
 
 <div class="w3-row">
-  <h2 class="w3-xxlarge">Upload a new photo</h2>
+  <h2 class="w3-xxxlarge">upload a new photo</h2>
 </div>
 
-  {{ Form::open(['url' => '/photos/admin/uploadphoto', 'method' => 'POST', 'files' => true, 'id' => 'form-uploadphoto']) }}
+  {{ Form::open(['url' => '/ag-photography/admin/uploadphoto', 'method' => 'POST', 'files' => true, 'id' => 'form-uploadphoto']) }}
   {{ Form::label('phototitle', 'title', ['class' => 'w3-label w3-text-black w3-hover-text-white']) }}
   @if($errors->has('phototitle'))
     @foreach($errors->get('phototitle') as $error)

@@ -11,10 +11,10 @@
 @include('photos.messages')
 
 <div class="w3-row">
-  <h2 class="w3-xxlarge">Add a new tag</h2>
+  <h2 class="w3-xxxlarge">add a new tag</h2>
 </div>
 
-  {{ Form::open(['url' => '/photos/admin/addtag', 'method' => 'POST', 'id' => 'form-addtag']) }}
+  {{ Form::open(['url' => '/ag-photography/admin/addtag', 'method' => 'POST', 'id' => 'form-addtag']) }}
   {{ Form::label('tag', 'tag', ['class' => 'w3-label w3-text-black w3-hover-text-white']) }}
   @if($errors->has('tag'))
     @foreach($errors->get('tag') as $error)
