@@ -20,7 +20,7 @@ class RedirectIfAuthenticated
         
 
         if (Auth::guard($guard)->check()) {
-            return redirect('/ag-photography/admin/previous');
+            return redirect('/ag-photography/previous');
 
         }
 

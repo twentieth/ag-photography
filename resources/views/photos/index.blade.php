@@ -60,9 +60,9 @@
 @endphp
 @foreach($photos as $photo)
   @if($x===1)
-    <div class="w3-quarter">
+    <div class="w3-quarter w3-center">
   @endif
-    <img style="width:100%;" class="w3-image w3-greyscale-max image-small" src="/photos/small_color/{{ $photo->name }}.jpg" alt="{{ $photo->title }}">
+    <img class="w3-image w3-greyscale-max image-small" src="/photos/small_color/{{ $photo->name }}.jpg" alt="{{ $photo->title }}">
     <span class="title-hidden" style="display:none;">{{ $photo->title }}</span>
     <span class="description-hidden" style="display:none;">{{ $photo->description }}</span>
     <span class="tags-hidden" style="display:none;">
@@ -72,7 +72,7 @@
     </span>
   @if($x%$ratio===0 and $x!==1)
     </div>
-    <div class="w3-quarter">
+    <div class="w3-quarter w3-center">
   @endif
   @if($loop->last)
     </div>
@@ -83,11 +83,11 @@
 @endforeach
 </div>
 @elseif($count===0)
-  <div class="w3-center">There are no photos. <a href="/ag-photography/admin/uploadphoto">Click</a> to add a new one.</div>
+  <div class="w3-center w3-center">There are no photos. <a href="/ag-photography/admin/uploadphoto">Click</a> to add a new one.</div>
 @else
   @foreach($photos as $photo)
-    <div class="w3-quarter">
-      <img style="width:100%;" class="w3-image w3-greyscale-max image-small" src="/photos/small_color/{{ $photo->name }}.jpg" alt="{{ $photo->title }}">
+    <div class="w3-quarter w3-center">
+      <img class="w3-image w3-greyscale-max image-small" src="/photos/small_color/{{ $photo->name }}.jpg" alt="{{ $photo->title }}">
       <span class="title-hidden" style="display:none;">{{ $photo->title }}</span>
       <span class="description-hidden" style="display:none;">{{ $photo->description }}</span>
       <span class="tags-hidden" style="display:none;">

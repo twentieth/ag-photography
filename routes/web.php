@@ -20,16 +20,16 @@ Route::get('/', function () {
 system
 */
 Auth::routes();
-Route::any('/', 'PhotosController@index')->name('index');
+Route::any('/', 'PhotosController@index')->name('home');
 Route::get('/home', 'HomeController@index');
 
 
 /*
 ag-photography
 */
-Route::any('/ag-photography', 'PhotosController@index')->name('index');
+Route::any('/ag-photography', 'PhotosController@index')->name('ag-photography');
 
-Route::any('/ag-photography/tag/{tag?}', 'PhotosController@index')->name('index');
+Route::any('/ag-photography/tag/{tag?}', 'PhotosController@index')->name('tag');
 
 Route::any('/ag-photography/contact', 'PhotosController@contact')->name('contact');
 
@@ -41,18 +41,16 @@ Route::get('/ag-photography/admin/list', 'PhotosController@photoslist')->name('p
 
 Route::get('/ag-photography/admin/photo/{id}', 'PhotosController@photo');
 
-Route::get('/ag-photography/admin/logout', 'PhotosAdminController@logout')->name('logout');
+Route::get('/ag-photography/logout', 'PhotosController@logout')->name('logout');
 
-Route::get('/ag-photography/admin/previous', 'PhotosAdminController@previous')->name('previous');
+Route::get('/ag-photography/previous', 'PhotosController@previous')->name('previous');
+
+Route::get('/ag-photography/login', 'Auth\LoginController@showLoginForm');
 
 
 /*
 tests
 */
-Route::any('test', 'TestController@test');
+Route::get('/index', 'UsersController@index')->name('index');
+Route::post('/authentication', 'UsersController@authentication')->name('authentication');
 
-Route::get('date', function(){
-	return date('Y-m-d H:i:s');
-});
-
-Route::get('/sessions', 'TestController@sessions')->name('sessions');

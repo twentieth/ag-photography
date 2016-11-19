@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests;
 use App\Photo;
 use App\Tag;
-use Illuminate\Support\Facades\Mail;
+use App\User;
+
 
 class PhotosController extends Controller
 {
@@ -33,7 +35,7 @@ class PhotosController extends Controller
         
         if($request->isMethod('GET'))
         {
-            $photos = Photo::all();
+            $photos = Photo::orderBy('created_at', 'DESC')->get();
             if($photos->count() != 0)
             {
                 if($tag === null)
@@ -46,7 +48,7 @@ class PhotosController extends Controller
                 {
                     $tag_to_ajax = $tag;
                     $tag = Tag::where('tag', $tag)->first();
-                    $photos = $tag->photos;
+                    $photos = $tag->photos()->orderBy('created_at', 'DESC')->get();
                     $count = $photos->count();
                     $ratio = $count / 4;
                 }
@@ -64,17 +66,17 @@ class PhotosController extends Controller
             if($request->has('name'))
             {
                 $name = $request->name;
-                $all = Photo::all();
-                $id = Photo::where('name', $name)->first()->id;
+                $all = Photo::orderBy('created_at', 'DESC')->get();
+                $created_at = Photo::where('name', $name)->first()->created_at;
                 $tag = Tag::where('tag', $tag)->first();
 
                 if($request->direction === 'right')
                 {
                     if($tag == null)
                     {
-                        if(Photo::where('id', '>', $id)->exists())
+                        if(Photo::where('created_at', '<', $created_at)->exists())
                         {
-                            $collection = Photo::where('id', '>', $id)->first();
+                            $collection = Photo::orderBy('created_at', 'DESC')->where('created_at', '<', $created_at)->first();
                         }
                         else
                         {
@@ -83,13 +85,13 @@ class PhotosController extends Controller
                     }
                     else
                     {
-                        if($tag->photos()->where('id', '>', $id)->exists())
+                        if($tag->photos()->where('created_at', '<', $created_at)->exists())
                         {
-                            $collection = $tag->photos()->where('id', '>', $id)->first();
+                            $collection = $tag->photos()->orderBy('created_at', 'DESC')->where('created_at', '<', $created_at)->first();
                         }
                         else
                         {
-                            $collection = $tag->photos->first();
+                            $collection = $tag->photos()->orderBy('created_at', 'DESC')->first();
                         }
                     }
                 }
@@ -97,9 +99,9 @@ class PhotosController extends Controller
                 {
                     if($tag == null)
                     {
-                        if(Photo::where('id', '<', $id)->exists())
+                        if(Photo::where('created_at', '>', $created_at)->exists())
                         {
-                            $collection = Photo::where('id', '<', $id)->orderBy('id', 'desc')->first();
+                            $collection = Photo::where('created_at', '>', $created_at)->orderBy('created_at', 'ASC')->first();
                         }
                         else
                         {
@@ -108,13 +110,13 @@ class PhotosController extends Controller
                     }
                     else
                     {
-                        if($tag->photos()->where('id', '<', $id)->exists())
+                        if($tag->photos()->where('created_at', '>', $created_at)->exists())
                         {
-                            $collection = $tag->photos()->where('id', '<', $id)->orderBy('id', 'desc')->first();
+                            $collection = $tag->photos()->where('created_at', '>', $created_at)->orderBy('id', 'ASC')->first();
                         }
                         else
                         {
-                            $collection = $tag->photos->last();
+                            $collection = $tag->photos()->orderBy('created_at', 'ASC')->first();
                         }
                     }
                 }
@@ -186,5 +188,22 @@ EOT;
                 return redirect()->route('contact')->with(['message_type' => 'warning', 'message_text' => "I'm sorry. The message may not be sent. Please try later."]);
             }
         }
+    }
+
+    public function logout()
+    {
+      Auth::logout();
+      return redirect()->route('ag-photography');
+    }
+    public function previous(Request $request)
+    {
+      if($request->session()->exists('previous'))
+      {
+        return redirect()->route($request->session()->get('previous'));
+      }
+      else
+      {
+        return redirect()->route('ag-photography');
+      }
     }
 }

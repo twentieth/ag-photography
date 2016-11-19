@@ -6,13 +6,14 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Ch' => $baseDir . '/database/migrations/2016_11_06_214405_ch.php',
+    'AddActiveSuperuserToUsers' => $baseDir . '/database/migrations/2016_11_19_084453_add_active_superuser_to_users.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/old/2014_10_12_100000_create_password_resets_table.php',
     'CreateTablePhotoTag' => $baseDir . '/database/migrations/old/2016_10_22_093641_create_table_photo_tag.php',
     'CreateTablePhotos' => $baseDir . '/database/migrations/old/2016_10_22_093251_create_table_photos.php',
     'CreateTableTags' => $baseDir . '/database/migrations/old/2016_10_22_093613_create_table_tags.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/old/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
+    'DropUniqueTitle' => $baseDir . '/database/migrations/old/2016_11_18_185302_drop_unique_title.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
     'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/src/Factory.php',

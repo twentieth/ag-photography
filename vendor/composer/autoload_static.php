@@ -341,13 +341,14 @@ class ComposerStaticInit32c532256466bec1825c7d18e616c662
     );
 
     public static $classMap = array (
-        'Ch' => __DIR__ . '/../..' . '/database/migrations/2016_11_06_214405_ch.php',
+        'AddActiveSuperuserToUsers' => __DIR__ . '/../..' . '/database/migrations/2016_11_19_084453_add_active_superuser_to_users.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/old/2014_10_12_100000_create_password_resets_table.php',
         'CreateTablePhotoTag' => __DIR__ . '/../..' . '/database/migrations/old/2016_10_22_093641_create_table_photo_tag.php',
         'CreateTablePhotos' => __DIR__ . '/../..' . '/database/migrations/old/2016_10_22_093251_create_table_photos.php',
         'CreateTableTags' => __DIR__ . '/../..' . '/database/migrations/old/2016_10_22_093613_create_table_tags.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/old/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
+        'DropUniqueTitle' => __DIR__ . '/../..' . '/database/migrations/old/2016_11_18_185302_drop_unique_title.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',

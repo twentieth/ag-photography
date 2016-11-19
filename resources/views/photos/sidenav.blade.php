@@ -4,7 +4,7 @@
   <a href="#" class="w3-closenav w3-jumbo w3-right w3-display-topright close-my-sidenav" style="padding:6px 24px">
     <i class="fa fa-remove"></i>
   </a>
-  <a href="/" class="w3-text-grey w3-hover-black">Home</a>
+  <a href="/ag-photography" class="w3-text-grey w3-hover-black">Home</a>
   @if(isset($tags))
   <div class="w3-dropdown-click">
     <a href="javascript:void(0)" class="w3-text-grey w3-hover-light-grey dropdown-content-click-cathegories">Cathegories</a>
@@ -24,7 +24,7 @@
   <a href="/ag-photography/contact" class="w3-text-grey w3-hover-black">Contact</a>
   <!--<a href="javascript:void(0)" class="w3-text-grey w3-hover-black">About</a>-->
   @if(Auth::check())
-    <a href="/ag-photography/admin/logout" class="w3-text-grey w3-hover-black">Log Out</a>
+    <a href="/ag-photography/logout" class="w3-text-grey w3-hover-black">Log Out</a>
   @else
     <!--<a href="/login" class="w3-text-grey w3-hover-black">Log In</a>-->
   @endif

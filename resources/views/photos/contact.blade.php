@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 @include('photos.head')
@@ -52,5 +54,4 @@
  
 </body>
 </html>
- 
  

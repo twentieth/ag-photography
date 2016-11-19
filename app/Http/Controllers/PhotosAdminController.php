@@ -48,11 +48,6 @@ class PhotosAdminController extends Controller
             {
               //////////// input text
               $title = trim($request->input('phototitle'));
-              $ifExists = Photo::where('title', $title)->exists();
-              if($ifExists)
-              {
-                return redirect()->route('uploadphoto')->withInput()->with(['message_type' => 'warning', 'text' => 'Zmień tytuł.']);
-              }
               $description = trim($request->input('photodescription'));
 
               //////////// input photo
@@ -177,23 +172,6 @@ class PhotosAdminController extends Controller
 
          return redirect()->route('addtag')->with(['message_type' => 'success', 'message_text' => 'The tag has been added to the database.']);
         }
-      }
-    }
-
-    public function logout()
-    {
-      Auth::logout();
-      return redirect()->route('index');
-    }
-    public function previous(Request $request)
-    {
-      if($request->session()->exists('previous'))
-      {
-        return redirect()->route($request->session()->get('previous'));
-      }
-      else
-      {
-        return redirect('/photos/index');
       }
     }
 }
