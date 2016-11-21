@@ -13,19 +13,6 @@ use App\User;
 
 class PhotosController extends Controller
 {
-    public function photoslist(Request $request)
-    {
-    	$photos = Photo::all();
-
-    	return view('photos.photoslist', ['photos' => $photos]);
-    }
-    public function photo($id)
-    {
-    	$o = Photo::find($id);
-		$name = $o->name;
-		$ext = $o->ext;
-		return view('photos.photoview', ['name' => $name, 'ext' => $ext]);
-    }
 
     /************************************************/
     public function index(Request $request, $tag=null)
@@ -151,9 +138,9 @@ class PhotosController extends Controller
                 'your_message' => 'required|max:500',
             ];
             $messages = [
-                'required' => 'The field is required.',
-                'max' => 'The field may not be greater than :max characters.',
-                'email' => 'The field must be formatted as an e-mail address.',
+                'required' => 'the field is required.',
+                'max' => 'the field may not be greater than :max characters.',
+                'email' => 'the field must be formatted as an e-mail address.',
             ];
 
             $this->validate($request, $rules, $messages);

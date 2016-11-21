@@ -254,9 +254,46 @@ $('#form-addtag').submit(function(){
         $('.dropdown-content-cathegories').slideToggle()
     })
 
+    if($('input[name="photodelete"]').is(':checked'))
+        {
+            $('#form-uploadphoto input[type="submit"]').removeClass('w3-text-black').addClass('w3-text-red').attr('value', 'delete')
+        }
 
+    $('input[name="photodelete"]').click(function(){
+        if($('input[name="photodelete"]').is(':checked'))
+        {
+            $('#form-uploadphoto input[type="submit"]').removeClass('w3-text-black').addClass('w3-text-red').attr('value', 'delete')
+        }
+        else
+        {
+            $('#form-uploadphoto input[type="submit"]').removeClass('w3-text-red').addClass('w3-text-black').attr('value', 'update')
+        }
 
+    })
 
+    $('#form-uploadphoto input[type="submit"]').click(function(){
+        if($('input[name="photodelete"]').is(':visible'))
+        {
+            if(confirm("Are you sure to delete this picture?"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    })
+    $('#form-uploadphoto input[type="reset"]').click(function(){
+        if($('input[name="photodelete"]').is(':visible'))
+        {
+            $('input[type="submit"]').addClass('w3-text-black').attr('value', 'update')
+        }
+        else
+        {
+            $('input[type="submit"]').addClass('w3-text-black').attr('value', 'add')
+        }
+    })
 
 
 

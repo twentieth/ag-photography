@@ -63,9 +63,13 @@ a:hover
 }
 .image-lightbox
 {
-	background: url(/photos/2.gif) 50% no-repeat;
+	background: url("/photos/2.gif") 50% no-repeat;
 }
 .message
 {
 	margin-top: 20px;
+}
+.photo-update
+{
+	margin: 10px 10px 10px 0;
 }

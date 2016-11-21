@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 use App\Http\Requests;
 use Image;
@@ -14,31 +15,42 @@ use App\Tag;
 class PhotosAdminController extends Controller
 {
     /*******************************************/
-    public function uploadphoto(Request $request)
+    public function upload(Request $request, $id=null)
     {
-        if($request->isMethod('GET'))
-        {
-          $tags = Tag::all();
-          $tags_arr = array();
-  		    foreach($tags as $tag)
-  		    {
-    		    $tags_arr[$tag->id] = $tag->tag;
-  		    }		
-          return view('photos.uploadphoto', ['tags' => $tags, 'tags_arr' => $tags_arr]);
-        }
         if($request->isMethod('POST'))
         {
+          if($id !== null)
+          {
+            $o = Photo::find((int)$id);
+
+            if($request->photodelete)
+            {
+              $o->delete();
+              $u1 = unlink('photos/normal/' . $o->name . '.jpg');
+              $u2 = unlink('photos/medium/' . $o->name . '.jpg');
+              $u3 = unlink('photos/small_color/' . $o->name . '.jpg');
+
+              if($u1 and $u2 and $u3)
+              {
+                return redirect()->route('uploadphoto')->with(['message_type' => 'success', 'message_text' => 'the picture has been deleted.']);
+              }
+              else
+              {
+                return redirect()->route('uploadphoto')->with(['message_type' => 'warning', 'message_text' => 'the picture has been deleted from the database, but you have to delete files from the server manually.']);
+              }
+            }
+          }
       	     $rules = [
                 'phototitle' => 'max:100',
                 'photodescription' => 'max:500',
-                'photo' => 'required|image|mimes:jpeg,jpg,png,JPG,JPEG|max:102400',
+                'photo' => 'required|image|mimes:jpeg,jpg,png,JPG,JPEG,PNG|max:102400',
                 'phototags' => 'max:100',
             ];
             $messages = [
                 'required' => 'The field is required.',
                 'max' => 'The field may not be greater than :max.',
                 'image' => 'The file must be an image file.',
-                'mimes' => 'The file must be an image file *.jpg, *.jpeg, *.JPG, *.JPEG, *.png.',
+                'mimes' => 'The file must be an image file *.jpg, *.jpeg, *.JPG, *.JPEG, *.png., *.PNG',
             ];
 
           $this->validate($request, $rules, $messages);
@@ -66,19 +78,26 @@ class PhotosAdminController extends Controller
                 }
                 return $str;
               }
-              $name = randomStringFromFigures(10);
-              while(True)
+              if($id === null)
               {
-                $ifExists = Photo::where('name', $name)->exists();
-                if($ifExists)
+                $name = randomStringFromFigures(10);
+                while(True)
                 {
-                  $name = randomStringFromFigures(10);
+                  $ifExists = Photo::where('name', $name)->exists();
+                  if($ifExists)
+                  {
+                    $name = randomStringFromFigures(10);
                   continue;
+                  }
+                  else
+                  {
+                    break;
+                  }
                 }
-                else
-                {
-                  break;
-                }
+              }
+              else
+              {
+                $name = $o->name;
               }
 
               $tags_ids = array();
@@ -112,29 +131,80 @@ class PhotosAdminController extends Controller
               })->save('photos/small_color/' . $name . '.jpg');
         
               ///////////// store in db
-              $o = new Photo();
+              if($id === null)
+              {
+                $o = new Photo();
+              }
+              else
+              {
+                //
+              }
+
               $o->title = $title;
               $o->description = $description;
               $o->name = (string)$name;
               $o->ext = $ext;
-
               $o->save();
 
               ///////////// add tags
               $photo = Photo::where('name', $name)->first();
-              $photo->tags()->attach($tags_ids);
-              return redirect()->route('uploadphoto')->with(['message_type' => 'success', 'message_text' => 'The picture has been uploaded.']);
+
+              if($id === null)
+              {
+                $photo->tags()->attach($tags_ids);
+              }
+              else
+              {
+                $photo->tags()->detach();
+                $photo->tags()->attach($tags_ids);
+              }
+
+              if($id === null)
+              {
+                return redirect()->route('uploadphoto')->with(['message_type' => 'success', 'message_text' => 'the picture has been uploaded.']);
+              }
+              else
+              {
+                return redirect()->route('uploadphoto')->with(['message_type' => 'success', 'message_text' => 'the picture has been updated.']);
+              }
             }
             else
             {
-              return redirect()->route('uploadphoto')->with(['message_type' => 'warning', 'message_text' => 'Załączony plik jest nieprawidłowy.']);
+              return redirect()->route('uploadphoto')->with(['message_type' => 'warning', 'message_text' => 'attached file is invalid.']);
             }
           }
           else
           {
-            return redirect()->route('uploadphoto')->with(['message_type' => 'warning', 'message_text' => 'Załącz plik.']);
+            return redirect()->route('uploadphoto')->with(['message_type' => 'warning', 'message_text' => 'attach a file.']);
           }
         }
+    }
+
+    /**************************************/
+    public function updatephoto(Request $request, $id)
+    {
+      if($request->isMethod('GET'))
+      {
+        $tags = Tag::all();
+        $tags_arr = array();
+        foreach($tags as $tag)
+        {
+          $tags_arr[$tag->id] = $tag->tag;
+        }
+        $photo = Photo::find($request->id);
+
+        return view('photos.uploadphoto', ['tags' => $tags, 'tags_arr' => $tags_arr, 'id' => $id, 'photo' => $photo, 'updatephoto' => true]);
+      }
+    }
+    public function uploadphoto(request $request)
+    {
+        $tags = Tag::all();
+        $tags_arr = array();
+        foreach($tags as $tag)
+        {
+          $tags_arr[$tag->id] = $tag->tag;
+        }   
+        return view('photos.uploadphoto', ['tags' => $tags, 'tags_arr' => $tags_arr]);
     }
 
     /**************************************/
@@ -151,8 +221,8 @@ class PhotosAdminController extends Controller
                 'tag' => 'required|max:100',
             ];
             $messages = [
-                'required' => 'The field is required.',
-                'max' => 'The field may not be greater than :max characters.',
+                'required' => 'the field is required.',
+                'max' => 'the field may not be greater than :max characters.',
             ];
 
             $this->validate($request, $rules, $messages);
@@ -162,7 +232,7 @@ class PhotosAdminController extends Controller
 
         if($ifExists)
         {
-         return redirect()->route('addtag')->withInput()->with(['message_type' => 'warning', 'message_text' => 'The tag already exists in the database. Insert another one.']);
+         return redirect()->route('addtag')->withInput()->with(['message_type' => 'warning', 'message_text' => 'the tag already exists in the database. Insert another one.']);
         }
         else
         {
@@ -173,5 +243,13 @@ class PhotosAdminController extends Controller
          return redirect()->route('addtag')->with(['message_type' => 'success', 'message_text' => 'The tag has been added to the database.']);
         }
       }
+    }
+
+    /******************************************/
+    public function photoslist(Request $request)
+    {
+      $tags = Tag::all();
+      $photos = Photo::all();
+      return view('photos.photoslist', ['tags' => $tags, 'photos' => $photos]);
     }
 }
