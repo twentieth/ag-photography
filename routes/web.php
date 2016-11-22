@@ -49,6 +49,8 @@ Route::get('/ag-photography/previous', 'PhotosController@previous')->name('previ
 
 Route::get('/ag-photography/login', 'Auth\LoginController@showLoginForm');
 
+Route::get('/ag-photography/register', 'Auth\RegisterController@showRegistrationForm');
+
 
 /*
 tests
