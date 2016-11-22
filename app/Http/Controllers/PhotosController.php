@@ -138,9 +138,9 @@ class PhotosController extends Controller
                 'your_message' => 'required|max:500',
             ];
             $messages = [
-                'required' => 'the field is required.',
-                'max' => 'the field may not be greater than :max characters.',
-                'email' => 'the field must be formatted as an e-mail address.',
+                'required' => 'the field is required',
+                'max' => 'the field may not be greater than :max characters',
+                'email' => 'the field must be formatted as an e-mail address',
             ];
 
             $this->validate($request, $rules, $messages);
@@ -168,11 +168,11 @@ EOT;
             
             if($mail)
             {
-                return redirect()->route('contact')->with(['message_type' => 'info', 'message_text' => 'Thank you. The message has been sent.']);
+                return redirect()->route('contact')->with(['message_type' => 'info', 'message_text' => 'thank you, the message has been sent']);
             }
             else
             {
-                return redirect()->route('contact')->with(['message_type' => 'warning', 'message_text' => "I'm sorry. The message may not be sent. Please try later."]);
+                return redirect()->route('contact')->with(['message_type' => 'warning', 'message_text' => "i'm sorry, the message may not be sent, please try again later"]);
             }
         }
     }

@@ -272,7 +272,7 @@ $('#form-addtag').submit(function(){
     })
 
     $('#form-uploadphoto input[type="submit"]').click(function(){
-        if($('input[name="photodelete"]').is(':visible'))
+        if($('input[name="photodelete"]').is(':checked'))
         {
             if(confirm("Are you sure to delete this picture?"))
             {
