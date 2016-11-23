@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,4 +58,8 @@ tests
 */
 Route::get('/index', 'UsersController@index')->name('index');
 Route::post('/authentication', 'UsersController@authentication')->name('authentication');
+
+Route::get('/test', function(){
+	return '';
+})->name('test');
 

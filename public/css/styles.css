@@ -73,3 +73,16 @@ a:hover
 {
 	margin: 10px 10px 10px 0;
 }
+ul.pagination
+{
+	list-style-type: none;
+}
+ul.pagination li
+{
+	display: inline-block;
+	padding: 15px;
+}
+.dropdown-content
+{
+	display: none;
+}

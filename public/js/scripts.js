@@ -253,6 +253,13 @@ $('#form-addtag').submit(function(){
     $('.dropdown-content-click-cathegories').click(function(){
         $('.dropdown-content-cathegories').slideToggle()
     })
+    $('.dropdown-content-click-admin').click(function(){
+        $('.dropdown-content-admin').slideToggle()
+    })
+    $('.dropdown-up').click(function(e){
+        e.preventDefault()
+        $('.dropdown-content-cathegories, .dropdown-content-admin').slideUp()
+    })
 
     if($('input[name="photodelete"]').is(':checked'))
         {
@@ -295,7 +302,7 @@ $('#form-addtag').submit(function(){
         }
     })
 
-
+    
 
 
 

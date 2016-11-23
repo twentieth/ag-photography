@@ -53,13 +53,13 @@
 <div class="w3-content" style="max-width:1920px">
   
 <!-- Photo Grid -->
-<div class="w3-row" id="myGrid">
 @if($count>=4)
 @php
   $x = 1;
 @endphp
 @foreach($photos as $photo)
   @if($x===1)
+    <div class="w3-row" id="myGrid">
     <div class="w3-quarter w3-center">
   @endif
     <img class="w3-image w3-greyscale-max image-small" src="/photos/small_color/{{ $photo->name }}.jpg" alt="{{ $photo->title }}">
@@ -85,6 +85,7 @@
 @elseif($count===0)
   <div class="w3-center w3-center">There are no photos. <a href="/ag-photography/admin/uploadphoto">Click</a> to add a new one.</div>
 @else
+<div class="w3-row" id="myGrid">
   @foreach($photos as $photo)
     <div class="w3-quarter w3-center">
       <img class="w3-image w3-greyscale-max image-small" src="/photos/small_color/{{ $photo->name }}.jpg" alt="{{ $photo->title }}">
@@ -97,10 +98,11 @@
       </span>
     </div>
   @endforeach
-@endif
 </div>
+@endif
 
 <!-- End Page Content -->
+{{ $photos->links() }}
 </div>
 
 <!-- Footer -->
@@ -109,7 +111,7 @@
    <!--<a href="#" class="w3-hover-text-indigo"><i class="fa fa-facebook-official"></i></a>-->
    <a href="https://www.flickr.com/photos/139384339@N03" class="w3-hover-text-grey" target="_blank"><i class="fa fa-flickr"></i></a>
  </div>
-  <p style="font-weight:normal">Designed by <a href="/ag-photography/contact" target="_blank" class="designed">Adam Guła</a></p>
+  <p style="font-weight:normal">Designed by <a href="/ag-photography/contact" class="designed">Adam Guła</a></p>
 </footer>
  
 <script>

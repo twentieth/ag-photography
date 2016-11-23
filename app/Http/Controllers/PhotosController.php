@@ -22,7 +22,8 @@ class PhotosController extends Controller
         
         if($request->isMethod('GET'))
         {
-            $photos = Photo::orderBy('created_at', 'DESC')->get();
+            //$photos = Photo::orderBy('created_at', 'DESC')->get();
+            $photos = Photo::orderBy('created_at', 'DESC')->paginate(30);
             if($photos->count() != 0)
             {
                 if($tag === null)
@@ -35,7 +36,8 @@ class PhotosController extends Controller
                 {
                     $tag_to_ajax = $tag;
                     $tag = Tag::where('tag', $tag)->first();
-                    $photos = $tag->photos()->orderBy('created_at', 'DESC')->get();
+                    $photos = $tag->photos()->orderBy('created_at', 'DESC')->paginate(30);
+                    //$photos = $tag->photos()->orderBy('created_at', 'DESC')->get();
                     $count = $photos->count();
                     $ratio = $count / 4;
                 }

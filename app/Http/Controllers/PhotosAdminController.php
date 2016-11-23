@@ -248,7 +248,7 @@ class PhotosAdminController extends Controller
     public function photoslist(Request $request)
     {
       $tags = Tag::all();
-      $photos = Photo::all();
+      $photos = Photo::orderBy('created_at', 'desc')->paginate(10);
       return view('photos.photoslist', ['tags' => $tags, 'photos' => $photos]);
     }
 }

@@ -14,23 +14,23 @@
 
 <ul class="w3-ul">
   @php
-    $x = 1;
+    $count = $photos->count();
   @endphp
   @foreach($photos as $photo)
   <div class="w3-row">
     <li>
-      <div class="w3-col m1"><span class="w3-medium w3-text-grey">{{ $x }}</span></div>
-      <div class="w3-col m4"><a href="/ag-photography/admin/updatephoto/{{ $photo->id }}">{{ $photo->title }}</a></div>
-      <div class="w3-col m3"><img class="w3-image w3-card-8" src="/photos/small_color/{{ $photo->name }}.jpg" alt="{{ $photo->title }}"></div>
+      <div class="w3-col s1"><span class="w3-medium w3-text-grey">{{ $count }}</span></div>
+      <div class="w3-col s8"><a href="/ag-photography/admin/updatephoto/{{ $photo->id }}">{{ $photo->title }}</a></div>
+      <div class="w3-col s3"><a href="/ag-photography/admin/updatephoto/{{ $photo->id }}"><img class="w3-image w3-card-8" src="/photos/small_color/{{ $photo->name }}.jpg" alt="{{ $photo->title }}"></a></div>
     </li>
   </div>
   @php
-    $x++;
+    $count--;
   @endphp
   @endforeach
 </ul>
 
-
+{{ $photos->links() }}
 </div>
 </div>
 </div>
