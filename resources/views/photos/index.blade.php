@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-@include('photos.head')
-<body class="w3-light-grey">
+@extends('photos.base')
+  
+@section('content')
 
 <!-- Lightbox -->
 <section class="w3-sidenav w3-black w3-animate-top w3-center w3-xxlarge lightbox" style="display:none;padding-top:150px">
@@ -18,7 +17,7 @@
           </div>
         </div>
         <div class="w3-row w3-display-container w3-center">
-            <img class="w3-image w3-border w3-border-light-grey image-lightbox" src="" alt="">
+            <img class="w3-image w3-border w3-border-light-grey image-lightbox" src="#" alt="#">
             <div class="w3-display-left w3-container button-left"><i class="fa fa-chevron-left button"></i></div>
             <div class="w3-display-right w3-container button-right"><i class="fa fa-chevron-right button"></i></div>
             
@@ -137,7 +136,8 @@ function w3_open() {
 </script>
 
 <span class="tag-hidden" style="display:none;">{{ $tag_to_ajax }}</span>
-</body>
-</html>
+
+
+@endsection('content')
  
  

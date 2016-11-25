@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-@include('photos.head')
-<body class="w3-light-grey">
+@extends('photos.base')
+  
+@section('content')
 
  
 <div class="w3-row">
@@ -99,7 +98,4 @@
   </div>
 </div>
 
-    </body>
-</html>
- 
- 
+@endsection('content')

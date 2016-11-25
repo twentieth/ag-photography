@@ -162,20 +162,21 @@ $('form[name="contact"]').on('submit', function(e)
 
     $('.errors').hide()
 
-    if(!regex_name.test($('input[name="your_name"]').val()) || !regex_message.test($('textarea[name="your_message"]').val()) || !regex_email.test($('input[name="your_email"]').val()))
+    //if(!regex_name.test($('input[name="your_name"]').val()) || !regex_message.test($('textarea[name="your_message"]').val()) || !regex_email.test($('input[name="your_email"]').val()))
+    if($('input[name="your_name"]').val() === '' || $('textarea[name="your_message"]').val() === '' || $('input[name="your_email"]').val() === '')
     {
 
         if(!regex_name.test($('input[name="your_name"]').val()))
         {
-            $('input[name="your_name"]').before('<span class="w3-normal w3-text-red errors">The field is filled improperly.</span>')
+            $('input[name="your_name"]').before('<span class="w3-medium w3-text-red errors">The field is required.</span>')
         }
         if(!regex_message.test($('textarea[name="your_message"]').val()))
         {
-            $('textarea[name="your_message"]').before('<span class="w3-normal w3-text-red errors">The field is filled improperly.</span>')
+            $('textarea[name="your_message"]').before('<span class="w3-medium w3-text-red errors">The field is required.</span>')
         }
         if(!regex_email.test($('input[name="your_email"]').val()))
         {
-            $('input[name="your_email"]').before('<span class="w3-normal w3-text-red errors">The field is filled improperly.</span>')
+            $('input[name="your_email"]').before('<span class="w3-medium w3-text-red errors">The field is required.</span>')
         }
         return false;
     }
@@ -205,7 +206,7 @@ $('#form-addtag').submit(function(){
 
         if(!regex_tag.test($('input[name="tag"]').val()))
         {
-            $('input[name="tag"]').before('<span class="w3-normal w3-text-red errors">The field is filled improperly.</span>')
+            $('input[name="tag"]').before('<span class="w3-medium w3-text-red errors">The field is filled improperly.</span>')
         }
         return false;
     }
@@ -223,11 +224,11 @@ $('#form-addtag').submit(function(){
 
         if(!regex_title.test($('input[name="phototitle"]').val()))
         {
-            $('input[name="phototitle"]').before('<span class="w3-normal w3-text-red errors">The field is filled improperly.</span>')
+            $('input[name="phototitle"]').before('<span class="w3-medium w3-text-red errors">The field is filled improperly.</span>')
         }
         if(!regex_description.test($('textarea[name="photodescription"]').val()))
         {
-            $('textarea[name="photodescription"]').before('<span class="w3-normal w3-text-red errors">The field is filled improperly.</span>')
+            $('textarea[name="photodescription"]').before('<span class="w3-medium w3-text-red errors">The field is filled improperly.</span>')
         }
         return false;
     }

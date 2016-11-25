@@ -7,7 +7,7 @@
   <a href="/ag-photography" class="w3-text-grey w3-hover-black">home</a>
   @if(isset($tags))
   <div class="dropdown">
-    <a href="javascript:void(0)" class="w3-text-grey w3-hover-light-grey dropdown-content-click-cathegories"><span class="fa fa-chevron-down"></span> cathegories</a>
+    <a href="javascript:void(0)" class="w3-text-grey w3-hover-black dropdown-content-click-cathegories"><span class="fa fa-chevron-down"></span> cathegories</a>
     <div class="dropdown-content dropdown-content-cathegories">
       @foreach($tags as $tag)
         <a class="w3-black w3-text-grey w3-hover-black w3-xlarge" href="/ag-photography/tag/{{{ $tag->tag }}}">{{ $tag->tag }}</a>
@@ -18,7 +18,7 @@
   @endif
   @if(Auth::check())
   <div class="dropdown">
-    <a href="javascript:void(0)" class="w3-text-grey w3-hover-light-grey dropdown-content-click-admin"><span class="fa fa-chevron-down"></span> admin</a>
+    <a href="javascript:void(0)" class="w3-text-grey w3-hover-black dropdown-content-click-admin"><span class="fa fa-chevron-down"></span> admin</a>
     <div class="dropdown-content dropdown-content-admin">
       <a href="/ag-photography/admin/uploadphoto" class="w3-black w3-text-grey w3-hover-black w3-xlarge">add a new photo</a>
       <a href="/ag-photography/admin/addtag" class="w3-black w3-text-grey w3-hover-black w3-xlarge">add a new tag</a>

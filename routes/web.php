@@ -35,22 +35,19 @@ Route::any('/ag-photography/tag/{tag?}', 'PhotosController@index')->name('tag');
 Route::any('/ag-photography/contact', 'PhotosController@contact')->name('contact');
 
 Route::get('/ag-photography/admin/uploadphoto/', 'PhotosAdminController@uploadphoto')->name('uploadphoto')->middleware('auth');
-
 Route::get('/ag-photography/admin/updatephoto/{id}', 'PhotosAdminController@updatephoto')->name('updatephoto')->middleware('auth');
-
 Route::post('/ag-photography/admin/upload/{id?}', 'PhotosAdminController@upload')->name('upload')->middleware('auth');
 
 Route::any('/ag-photography/admin/addtag', 'PhotosAdminController@addtag')->name('addtag')->middleware('auth');
 
-Route::get('/ag-photography/admin/photoslist', 'PhotosAdminController@photoslist')->name('photoslist');
-
-Route::get('/ag-photography/logout', 'PhotosController@logout')->name('logout');
-
 Route::get('/ag-photography/previous', 'PhotosController@previous')->name('previous');
 
 Route::get('/ag-photography/login', 'Auth\LoginController@showLoginForm');
-
 Route::get('/ag-photography/register', 'Auth\RegisterController@showRegistrationForm');
+Route::get('/ag-photography/logout', 'PhotosController@logout')->name('logout');
+
+Route::get('/ag-photography/admin/photoslist', 'PhotosAdminController@photoslist')->name('photoslist')->middleware('auth');
+Route::post('/ag-photography/admin/photoslist', 'PhotosAdminController@search')->middleware('auth');
 
 
 /*

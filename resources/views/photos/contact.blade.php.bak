@@ -1,10 +1,15 @@
-@extends('photos.base')
+
+
+<!DOCTYPE html>
+<html lang="en">
+@include('photos.head')
+<body class="w3-light-grey">
+
   
-@section('content')
 
 <div class="w3-row">
-<div class="w3-rest">
-<div class="w3-container w3-padding-xxlarge w3-xlarge" id="contact-form">
+  <div class="w3-rest">
+    <div class="w3-container w3-padding-xxlarge w3-xlarge" id="contact-form">
 
 @include('photos.sidenav')
 @include('photos.messages')
@@ -42,9 +47,11 @@
   {{ Form::submit('send', ['class' => 'w3-btn w3-light-grey w3-text-black']) }}
   {{ Form::reset('clean', ['class' => 'w3-btn w3-light-grey w3-text-black']) }}
   {{ Form::close() }}
+    </div>
+  </div>
+</div>
 
-</div>
-</div>
-</div>
-
-@endsection('content')
+ 
+</body>
+</html>
+ 

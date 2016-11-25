@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-@include('photos.head')
-<body class="w3-light-grey">
+@extends('photos.base')
+  
+@section('content')
 
  
 <div class="w3-row">
@@ -11,6 +10,20 @@
 @include('photos.sidenav')
 @include('photos.messages')
 
+<div class="row">
+  <form method="POST" action="/ag-photography/admin/photoslist" name="form-search" id="form-search">
+  {{ csrf_field() }}
+    <label for="search" class="w3-label w3-text-black w3-hover-text-white">search</label>
+    @if($errors->has('search'))
+      @foreach($errors->get('search') as $error)
+        <span class="w3-medium w3-text-red errors">{{ $error }} </span>
+      @endforeach
+    @endif
+    <input type="text" name="search" class="w3-input" id="search" placeholder="*required">
+    <input type="submit" value="search" class="w3-btn w3-light-grey w3-text-black">
+    <input type="reset" value="clean" class="w3-btn w3-light-grey w3-text-black">
+  </form>
+</div>
 
 <ul class="w3-ul">
   @php
@@ -35,7 +48,5 @@
 </div>
 </div>
 
-</body>
-</html>
- 
+@endsection('content')
  
