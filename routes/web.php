@@ -46,8 +46,7 @@ Route::get('/ag-photography/login', 'Auth\LoginController@showLoginForm');
 Route::get('/ag-photography/register', 'Auth\RegisterController@showRegistrationForm');
 Route::get('/ag-photography/logout', 'PhotosController@logout')->name('logout');
 
-Route::get('/ag-photography/admin/photoslist', 'PhotosAdminController@photoslist')->name('photoslist')->middleware('auth');
-Route::post('/ag-photography/admin/photoslist', 'PhotosAdminController@search')->middleware('auth');
+Route::get('/ag-photography/admin/photoslist/{search?}', 'PhotosAdminController@photoslist')->name('photoslist')->middleware('auth');
 
 
 /*

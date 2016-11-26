@@ -303,7 +303,17 @@ $('#form-addtag').submit(function(){
         }
     })
 
-    
+    $('#btn-search').click(function(){
+        var text_search = $('#input-search').val().trim().toLowerCase()
+        if(text_search === '')
+        {
+            $('#link-search').attr('href', '/ag-photography/admin/photoslist')
+        }
+        else
+        {
+            $('#link-search').attr('href', '/ag-photography/admin/photoslist/' + text_search)
+        }
+    })
 
 
 

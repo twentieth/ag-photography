@@ -247,40 +247,25 @@ class PhotosAdminController extends Controller
     /******************************************/
     public function photoslist(Request $request)
     {
-      if($request->isMethod('GET'))
+      $tags = Tag::all();
+      
+      if($request->search===null)
       {
-        $tags = Tag::all();
-        if(!$request->session()->exists('photos'))
-        {
-          $photos = Photo::orderBy('created_at', 'desc')->paginate(10);
-        }
-        else
-        {
-          $photos = $request->session()->get('photos');
-        }
-        return view('photos.photoslist', ['tags' => $tags, 'photos' => $photos]);
+        $photos = Photo::orderBy('created_at', 'DESC')->paginate(2);
       }
+      else
+      {
+        $search = strtolower(trim($request->search));
+
+        $photos = Photo::where('title', 'LIKE', '%' . $search . '%')->orderBy('created_at', 'DESC')->paginate(2);
+
+        $request->session()->flash('message_type', 'info');
+        $request->session()->flash('message_text', 'search results for keyword: ' . $search);
+      }
+        
+      return view('photos.photoslist', ['tags' => $tags, 'photos' => $photos]);
     }
 
     /******************************************/
-    public function search(Request $request)
-    {
-      if($request->isMethod('POST'))
-      {
-
-        $rules = [
-          'search' => 'required|max:100'
-        ];
-        $messages = [
-          'required' => 'the field is required',
-          'max' => 'the field may not be greater than :max characters',
-        ];
-        $this->validate($request, $rules, $messages);
-
-        $search = trim($request->search);
-
-        $photos = Photo::where('title', 'LIKE', "%$search%")->orderBy('created_at', 'desc')->paginate(10);
-        return redirect()->route('photoslist')->with('photos', $photos);
-      }
-    }
+    
 }
