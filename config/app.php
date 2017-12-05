@@ -181,8 +181,9 @@ return [
         /*
          * My Providers
          */
+        Collective\Html\HtmlServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        'Collective\Html\HtmlServiceProvider'
+        Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
 
     ],
 
@@ -236,8 +237,9 @@ return [
          * My Aliases
          */
         'Image' => Intervention\Image\Facades\Image::class,
-        'Form'  => 'Collective\Html\FormFacade',
-        'HTML'  => 'Collective\Html\HtmlFacade' // Optional
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+        'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
 
     ],
 
