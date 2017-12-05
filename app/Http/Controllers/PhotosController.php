@@ -138,11 +138,13 @@ class PhotosController extends Controller
                 'your_name' => 'required|max:100',
                 'your_email' => 'required|max:255|email',
                 'your_message' => 'required|max:500',
+                'g-recaptcha-response' => 'required|captcha',
             ];
             $messages = [
                 'required' => 'the field is required',
                 'max' => 'the field may not be greater than :max characters',
                 'email' => 'the field must be formatted as an e-mail address',
+                'captcha' => 'captcha error, try again later or contact site admin',
             ];
 
             $this->validate($request, $rules, $messages);

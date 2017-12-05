@@ -39,6 +39,13 @@
   {{ Form::checkbox('cc_myself', True, True, ['class' => 'w3-check']) }}
   <br>
   <br>
+  @if($errors->has('g-recaptcha-response'))
+    @foreach($errors->get('g-recaptcha-response') as $error)
+      <span class="w3-medium w3-text-red errors">{{ $error }} </span>
+    @endforeach
+  @endif
+  {!! NoCaptcha::display() !!}
+  <br>
   {{ Form::submit('send', ['class' => 'w3-btn w3-light-grey w3-text-black']) }}
   {{ Form::reset('clean', ['class' => 'w3-btn w3-light-grey w3-text-black']) }}
   {{ Form::close() }}
