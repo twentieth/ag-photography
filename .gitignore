@@ -1,5 +1,5 @@
 Homestead.json
 Homestead.yaml
-/storage/app/
-/public/prestashop/
-/public/photos/
+storage/app
+public/photos
+.env
