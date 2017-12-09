@@ -58,7 +58,7 @@ return [
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'agphotography'),
             'username' => env('DB_USERNAME', 'admin'),
-            'password' => env('DB_PASSWORD', 'Dw5mpwdn'),
+            'password' => env('DB_PASSWORD', 'Dw5mpwdn?'),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',

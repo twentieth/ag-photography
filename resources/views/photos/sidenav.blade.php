@@ -27,7 +27,7 @@
     </div>
   </div>
   @endif
-  <a href="/ag-photography/contact" class="w3-text-grey w3-hover-black">contact</a>
+  <a href="{{ route('contactForm') }}" class="w3-text-grey w3-hover-black">contact</a>
   <!--<a href="javascript:void(0)" class="w3-text-grey w3-hover-black">About</a>-->
   @if(Auth::check())
     <a href="/ag-photography/logout" class="w3-text-grey w3-hover-black">log out</a>

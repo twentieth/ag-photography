@@ -3,3 +3,9 @@ Homestead.yaml
 storage/app
 public/photos
 .env
+/nbproject/private/
+nbproject/project.xml
+nbproject/project.properties
+.vscode/launch.json
+ag-photography.kdev4
+.kdev4/ag-photography.kdev4
